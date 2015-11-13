@@ -2,12 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/container.js';
 
+//css
+require('../../public/css/login.css');
+
+//img
+require('../../public/img/key-login.jpg');
+
 var SignIn = React.createClass({
     render: function() {
         return (
             <div>
-                { this.props.children }
-                <div className="container">
+                <div id="login-box" className="container">
                     <div className="row">
                         <div className="col-sm-6 col-md-4 col-md-offset-4">
                             <div className="panel panel-default">
@@ -20,7 +25,7 @@ var SignIn = React.createClass({
                                             <div className="row">
                                                 <div className="center-block">
                                                     <img className="profile-img"
-                                                         src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120" alt="" />
+                                                         src="img/key-login.jpg" alt="" size="10" />
                                                 </div>
                                             </div>
                                             <div className="row">
@@ -55,9 +60,7 @@ var SignIn = React.createClass({
                             </div>
                         </div>
                     </div>
-                    </div>
-
-
+                </div>
             </div>
         )
     }
