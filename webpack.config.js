@@ -1,5 +1,7 @@
 var path = require('path');
 var webpack = require("webpack");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var node_modules = path.resolve(__dirname, 'node_modules');
 var pathToReact = path.resolve(node_modules, 'react/dist/react.js');
 var pathToReactDOM = path.resolve(node_modules, 'react-dom/dist/react-dom.min.js');
@@ -22,14 +24,24 @@ config = {
             {
                 presets:['es2015','react']
             }
-        }],
+        },
+            { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
+            { test: /\.(png|jpg)$/, loader: 'file-loader?name=images/[name].[ext]' },
+            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
+            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
+        ],
         noParse: [pathToReact]
     },
     plugins: [
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"
-        })
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'app/public/index.html'
+        }),
+        new ExtractTextPlugin('app.css')
     ],
     resolve: {
         alias: {

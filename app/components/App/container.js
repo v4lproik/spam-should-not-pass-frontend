@@ -6,6 +6,9 @@ import Marketing from '../Marketing/container.js';
 import Featurette from '../Featurette/container.js';
 import SignIn from '../SignIn/container.js';
 
+require('../../public/css/bootstrap.min.css');
+require('../../public/css/carousel.css');
+
 var App = React.createClass({
     render: function() {
         return (
