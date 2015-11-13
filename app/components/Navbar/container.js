@@ -17,12 +17,19 @@ var Navbar = React.createClass({
                                     <span className="icon-bar"></span>
                                     <span className="icon-bar"></span>
                                 </button>
-                                <IndexLink to="/" className="navbar-brand" >Home</IndexLink>
+                                <IndexLink to="/" className="navbar-brand" >Spam Should Not Pass</IndexLink>
                             </div>
                             <div id="navbar" className="navbar-collapse collapse">
-                                <ul className="nav navbar-nav">
-                                    <li className="active"><IndexLink to="/">Home</IndexLink></li>
-                                    <li><Link to="/signin">SignIn</Link></li>
+                                <ul className="nav navbar-nav navbar-left">
+                                    <li><Link to="/signin">Products</Link></li>
+                                    <li><Link to="/signin">Parteners</Link></li>
+                                    <li><Link to="/signin">News</Link></li>
+                                    <li><Link to="/signin">Blog</Link></li>
+                                    <li><Link to="/signin">Company</Link></li>
+                                </ul>
+                                <ul className="nav navbar-nav navbar-right">
+                                    <li><Link to="/signin">Sign in</Link></li>
+                                    <li><Link to="/signin">Sign up</Link></li>
                                 </ul>
                             </div>
                         </div>
