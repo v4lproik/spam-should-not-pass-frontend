@@ -21,5 +21,6 @@ It provides a simple frontend that renders a nice and clean website and a user a
 1. Clone the repository
 2. `cd` to the created directory.
 3. npm install
+4. npm run build
 4. npm run dev
 5. Go to `http://localhost:8080`
