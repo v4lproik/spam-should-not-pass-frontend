@@ -10,6 +10,21 @@ config = {
         'webpack/hot/dev-server',
         path.resolve(__dirname, 'app/index.js')
     ],
+    output: {
+        path: path.resolve(__dirname, 'build'),
+        filename: "bundle.js",
+    },
+    module: {
+        loaders: [{
+            test: /\.js?$/,
+            loader: 'babel',
+            query:
+            {
+                presets:['es2015','react']
+            }
+        }],
+        noParse: [pathToReact]
+    },
     plugins: [
         new webpack.ProvidePlugin({
             $: "jquery",
@@ -23,20 +38,8 @@ config = {
             'jquery': pathToJquery
         }
     },
-    output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js'
-    },
-    module: {
-        loaders: [{
-            test: /\.js?$/,
-            loader: 'babel',
-            query:
-            {
-                presets:['es2015','react']
-            }
-        }],
-        noParse: [pathToReact]
+    devServer: {
+        historyApiFallback: true
     }
 };
 
