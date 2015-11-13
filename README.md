@@ -23,4 +23,4 @@ It provides a simple frontend that renders a nice and clean website and a user a
 3. npm install
 4. npm run build
 4. npm run dev
-5. Go to `http://localhost:8080`
+5. Go to `http://localhost:3000`
