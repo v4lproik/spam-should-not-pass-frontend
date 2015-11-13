@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/container.js';
+import AuthService from '../../service/AuthService.js';
+import LoginStore from '../../stores/LoginStore.js';
 
 //css
 require('../../public/css/login.css');
@@ -9,21 +11,15 @@ require('../../public/css/login.css');
 require('../../public/img/key-login.jpg');
 
 var SignIn = React.createClass({
-    getServerResponse: function(datax){
-        $.ajax({
-            type: "POST",
-            url: 'http://localhost:8080/auth/',
-            dataType: 'json',
-            data: datax,
-            cache: false,
-            success: function(data) {
-                this.setState({data: data});
-            }.bind(this),
-            error: function(xhr, status, err) {
-                console.error(this.props.url, status, err.toString());
-            }.bind(this)
-        });
+
+    componentDidMount: function() {
+        var user = LoginStore.getUser();
+        if(user !== 'undefined'){
+            this.props.history.pushState(null, '/admin');
+            return;
+        }
     },
+
     handleSubmit: function(e) {
         e.preventDefault();
         var author = this.refs.loginname.value.trim();
@@ -32,25 +28,14 @@ var SignIn = React.createClass({
             return;
         }
 
-        this.getServerResponse("{\"login\": \"test\", \"password\": \"test\"}");
+        AuthService.login(author, password);
         return;
     },
+
     getInitialState: function() {
         return {data: ['']};
     },
-    //componentDidMount: function() {
-    //    $.ajax({
-    //        url: 'http://localhost:8080/api/',
-    //        dataType: 'json',
-    //        cache: false,
-    //        success: function(data) {
-    //            this.setState({data: data});
-    //        }.bind(this),
-    //        error: function(xhr, status, err) {
-    //            console.error(this.props.url, status, err.toString());
-    //        }.bind(this)
-    //    });
-    //},
+
     render: function() {
         return (
             <div>
