@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/container.js';
-import AuthService from '../../service/AuthService.js';
+import AuthService from '../../services/AuthService.js';
+import MemberInfoService from '../../services/MemberInformationService.js';
 import LoginStore from '../../stores/LoginStore.js';
+import PlatformException from '../../models/PlatformException.js';
 
 //css
 require('../../public/css/login.css');
@@ -14,10 +16,30 @@ var SignIn = React.createClass({
 
     componentDidMount: function() {
         var user = LoginStore.getUser();
-        if(user !== 'undefined'){
-            this.props.history.pushState(null, '/admin');
+
+        if (user === null) {
             return;
         }
+
+        console.log("Verify user info with " + user.token);
+
+        MemberInfoService.info(user.token)
+            .then(function(data){
+                this.props.history.pushState(null, '/admin');
+            }.bind(this))
+            .catch(function(err){
+                if(err instanceof PlatformException.constructor){
+                    if(err.status == 403){
+                        LoginStore.clearUser();
+                        this.props.history.pushState(null, '/error403');
+                    }else {
+                        if (err.status == 401) {
+                            LoginStore.clearUser();
+                            this.props.history.pushState(null, '/error401');
+                        }
+                    }
+                }
+            }.bind(this));
     },
 
     handleSubmit: function(e) {
@@ -28,8 +50,43 @@ var SignIn = React.createClass({
             return;
         }
 
-        AuthService.login(author, password);
-        return;
+        AuthService.login(author, password)
+            .then(function(user){
+                console.log("login done - set token");
+                console.log(user);
+                LoginStore.setUser(user);
+
+                MemberInfoService.info(user.token)
+                    .then(function(data){
+                        this.props.history.pushState(null, '/admin');
+                    })
+                    .catch(function(err){
+                        if(err instanceof PlatformException.constructor){
+                            if(err.status == 403){
+                                LoginStore.clearUser();
+                                this.props.history.pushState(null, '/error403');
+                            }else {
+                                if (err.status == 401) {
+                                    LoginStore.clearUser();
+                                    this.props.history.pushState(null, '/error401');
+                                }
+                            }
+                        }
+                    }.bind(this));
+            })
+            .catch(function(err){
+                if(err instanceof PlatformException.constructor){
+                    if(err.status == 403){
+                        LoginStore.clearUser();
+                        this.props.history.pushState(null, '/error403');
+                    }else {
+                        if (err.status == 401) {
+                            LoginStore.clearUser();
+                            this.props.history.pushState(null, '/error401');
+                        }
+                    }
+                }
+            }.bind(this));
     },
 
     getInitialState: function() {
