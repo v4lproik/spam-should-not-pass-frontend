@@ -21,4 +21,16 @@ function redirectionError(history, code) {
     }
 }
 
-export {redirectionError}
+function redirectionSessionExpired(history) {
+    history.pushState(null, '/session-expired');
+}
+
+function redirectionUnauthorised(history) {
+    history.pushState(null, '/error401');
+}
+
+function redirectionAdmin(history) {
+    history.pushState(null, '/admin');
+}
+
+export {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin}

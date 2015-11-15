@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/container.js';
 import SignIn from './components/SignIn/container.js';
 import SignOut from './components/SignOut/container.js';
 import Error403 from './components/Error/error403.js';
+import SessionExpired from './components/Error/session.js';
 import Error401 from './components/Error/error401.js';
 import { Router, Route, Link, IndexRoute } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
@@ -15,6 +16,7 @@ ReactDOM.render(
     <Router history={createBrowserHistory()}>
         <Route path="/admin" component={Admin} />
         <Route path="/error403" component={Error403} />
+        <Route path="/session-expired" component={SessionExpired} />
         <Route path="/error401" component={Error401} />
         <Route path="/signin" component={SignIn} />
         <Route path="/logout" component={SignOut} />

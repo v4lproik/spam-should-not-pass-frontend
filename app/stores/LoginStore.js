@@ -48,6 +48,8 @@ class LoginStore {
     }
 
     setUser(user) {
+        user.lastUpdate = {};
+        user.lastUpdate = new Date();
         this.storage.setItem(this.userKey, JSON.stringify(user));
     }
 

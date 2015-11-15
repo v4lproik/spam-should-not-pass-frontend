@@ -5,6 +5,9 @@ import Navbar from '../Navbar/container.js';
 import AuthService from '../../services/AuthService.js';
 import LoginStore from '../../stores/LoginStore.js';
 import MemberInfoService from '../../services/MemberInformationService.js';
+import SessionService from '../../services/SessionService.js';
+import {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin} from '../App/utility.js';
+
 
 //css
 require('../../public/css/error.css');
@@ -16,10 +19,13 @@ var SignOut = React.createClass({
         var user = LoginStore.getUser();
 
         if (user === null) {
-            return;
+            redirectionUnauthorised(this.props.history);
         }
 
-        console.log("Verify user info with " + user.token);
+        if (!SessionService.isValid(user.lastUpdate)){
+            LoginStore.clearUser();
+            redirectionSessionExpired(this.props.history);
+        }
 
         MemberInfoService.info(user.token)
             .then(function (data) {

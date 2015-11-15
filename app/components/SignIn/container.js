@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/container.js';
-import {redirectionError} from '../App/utility.js';
+import {redirectionError, redirectionAdmin} from '../App/utility.js';
 import AuthService from '../../services/AuthService.js';
 import MemberInfoService from '../../services/MemberInformationService.js';
 import LoginStore from '../../stores/LoginStore.js';
@@ -22,11 +22,9 @@ var SignIn = React.createClass({
             return;
         }
 
-        console.log("Verify user info with " + user.token);
-
         MemberInfoService.info(user.token)
             .then(function(data){
-                this.props.history.pushState(null, '/admin');
+                redirectionAdmin(this.props.history);
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){

@@ -4,7 +4,8 @@ import { Link, IndexLink } from 'react-router';
 import LoginStore from '../../stores/LoginStore.js';
 import PlatformException from '../../models/PlatformException.js';
 import MemberInfoService from '../../services/MemberInformationService.js';
-import {redirectionError} from '../App/utility.js';
+import SessionService from '../../services/SessionService.js';
+import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../App/utility.js';
 
 var Admin = React.createClass({
 
@@ -18,10 +19,13 @@ var Admin = React.createClass({
         var user = LoginStore.getUser();
 
         if (user === null) {
-            this.props.history.pushState(null, '/error401');
+            redirectionUnauthorised(this.props.history);
         }
 
-        console.log("Verify user info with " + user.token);
+        if (!SessionService.isValid(user.lastUpdate)){
+            LoginStore.clearUser();
+            redirectionSessionExpired(this.props.history);
+        }
 
         MemberInfoService.info(user.token)
             .then(function(data){
