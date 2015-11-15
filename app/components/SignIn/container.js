@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/container.js';
+import {redirectionError} from '../App/utility.js';
 import AuthService from '../../services/AuthService.js';
 import MemberInfoService from '../../services/MemberInformationService.js';
 import LoginStore from '../../stores/LoginStore.js';
@@ -29,15 +30,7 @@ var SignIn = React.createClass({
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
-                    if(err.status == 403){
-                        LoginStore.clearUser();
-                        this.props.history.pushState(null, '/error403');
-                    }else {
-                        if (err.status == 401) {
-                            LoginStore.clearUser();
-                            this.props.history.pushState(null, '/error401');
-                        }
-                    }
+                    redirectionError(this.props.history, err.status);
                 }
             }.bind(this));
     },
@@ -52,51 +45,28 @@ var SignIn = React.createClass({
 
         AuthService.login(author, password)
             .then(function(user){
-                console.log("login done - set token");
-                console.log(user);
                 LoginStore.setUser(user);
 
                 MemberInfoService.info(user.token)
                     .then(function(data){
-                        this.props.history.pushState(null, '/admin');
-                    })
+                        this.props.history.pushState(data.token, '/admin');
+                    }.bind(this))
                     .catch(function(err){
                         if(err instanceof PlatformException.constructor){
-                            if(err.status == 403){
-                                LoginStore.clearUser();
-                                this.props.history.pushState(null, '/error403');
-                            }else {
-                                if (err.status == 401) {
-                                    LoginStore.clearUser();
-                                    this.props.history.pushState(null, '/error401');
-                                }
-                            }
+                            redirectionError(this.props.history, err.status);
                         }
                     }.bind(this));
-            })
+            }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
-                    if(err.status == 403){
-                        LoginStore.clearUser();
-                        this.props.history.pushState(null, '/error403');
-                    }else {
-                        if (err.status == 401) {
-                            LoginStore.clearUser();
-                            this.props.history.pushState(null, '/error401');
-                        }
-                    }
+                    redirection(this.props.history, err.status);
                 }
             }.bind(this));
-    },
-
-    getInitialState: function() {
-        return {data: ['']};
     },
 
     render: function() {
         return (
             <div>
-                {this.state.data}
                 <div id="login-box" className="container">
                     <div className="row">
                         <div className="col-sm-6 col-md-4 col-md-offset-4">
