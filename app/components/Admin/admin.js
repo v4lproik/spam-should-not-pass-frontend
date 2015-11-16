@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link, IndexLink } from 'react-router';
 import LoginStore from '../../stores/LoginStore.js';
 import PlatformException from '../../models/PlatformException.js';
-import MemberInfoService from '../../services/MemberInformationService.js';
+import MemberInfoService from '../../services/MemberService.js';
 import SessionService from '../../services/SessionService.js';
 import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../App/utility.js';
 
@@ -35,7 +35,7 @@ var Admin = React.createClass({
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.status);
+                    redirectionError(this.props.history, err.code);
                 }
             }.bind(this));
     },

@@ -6,6 +6,7 @@ var node_modules = path.resolve(__dirname, 'node_modules');
 var pathToReact = path.resolve(node_modules, 'react/dist/react.js');
 var pathToReactDOM = path.resolve(node_modules, 'react-dom/dist/react-dom.min.js');
 var pathToJquery = path.resolve(node_modules, 'jquery/dist/jquery.min.js');
+var pathToBootstrapValidator = path.resolve(node_modules, 'bootstrap-validator/dist/validator.min.js');
 
 config = {
     entry: [
@@ -14,7 +15,7 @@ config = {
     ],
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: "bundle.js",
+        filename: "bundle.js"
     },
     module: {
         loaders: [{
@@ -44,10 +45,12 @@ config = {
         new ExtractTextPlugin('app.css')
     ],
     resolve: {
+        modulesDirectories: ["node_modules"],
         alias: {
             'react': pathToReact,
             'react-dom': pathToReactDOM,
-            'jquery': pathToJquery
+            'jquery': pathToJquery,
+            'validator': pathToBootstrapValidator
         }
     },
     devServer: {

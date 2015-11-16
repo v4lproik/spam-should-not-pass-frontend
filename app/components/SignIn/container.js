@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/container.js';
 import {redirectionError, redirectionAdmin} from '../App/utility.js';
 import AuthService from '../../services/AuthService.js';
-import MemberInfoService from '../../services/MemberInformationService.js';
+import MemberInfoService from '../../services/MemberService.js';
 import LoginStore from '../../stores/LoginStore.js';
 import PlatformException from '../../models/PlatformException.js';
+import { Link, IndexLink } from 'react-router';
 
 //css
 require('../../public/css/login.css');
@@ -24,11 +25,13 @@ var SignIn = React.createClass({
 
         MemberInfoService.info(user.token)
             .then(function(data){
+                console.log(data);
                 redirectionAdmin(this.props.history);
             }.bind(this))
             .catch(function(err){
+                console.error(err);
                 if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.status);
+                    redirectionError(this.props.history, err.code);
                 }
             }.bind(this));
     },
@@ -47,17 +50,17 @@ var SignIn = React.createClass({
 
                 MemberInfoService.info(user.token)
                     .then(function(data){
-                        this.props.history.pushState(data.token, '/admin');
+                        this.props.history.pushState(null, '/admin');
                     }.bind(this))
                     .catch(function(err){
                         if(err instanceof PlatformException.constructor){
-                            redirectionError(this.props.history, err.status);
+                            redirectionError(this.props.history, err.code);
                         }
                     }.bind(this));
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
-                    redirection(this.props.history, err.status);
+                    redirectionError(this.props.history, err.code);
                 }
             }.bind(this));
     },
@@ -108,7 +111,7 @@ var SignIn = React.createClass({
                                     </form>
                                 </div>
                                 <div className="panel-footer ">
-                                    Don't have an account! <a href="#" onClick=""> Sign Up Here </a>
+                                    Don't have an account! <Link to="/signup">Sign Up Here </Link>
                                 </div>
                             </div>
                         </div>

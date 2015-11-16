@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Display } from 'react';
 import { Link, IndexLink } from 'react-router';
-import MemberInfoService from '../../services/MemberInformationService.js';
+import MemberInfoService from '../../services/MemberService.js';
 import LoginStore from '../../stores/LoginStore.js';
 
 var Navbar = React.createClass({
@@ -62,7 +62,7 @@ var Navbar = React.createClass({
                                         </ul>:
                                         <ul className="nav navbar-nav navbar-right">
                                             <li><Link to="/signin">Sign in</Link></li>
-                                            <li><Link to="/signin">Sign up</Link></li>
+                                            <li><Link to="/signup">Sign up</Link></li>
                                         </ul>
                                     }
                             </div>

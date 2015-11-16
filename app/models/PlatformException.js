@@ -1,13 +1,14 @@
 class PlatformException {
 
-    constructor(name, message, status){
-        this.name = name;
+    constructor(code, status, error, message){
+        this.code = code;
+        this.error = error;
         this.message = message;
         this.status = status;
     }
 
-    setName(name){
-        this.name = name;
+    setError(error){
+        this.error = error;
     }
 
     setMessage(message){
@@ -16,6 +17,10 @@ class PlatformException {
 
     setStatus(status){
         this.status = status;
+    }
+
+    setCode(code){
+        this.code = code;
     }
 
     getName(){
@@ -30,8 +35,12 @@ class PlatformException {
         return this.status;
     }
 
+    getCode(){
+        return this.code;
+    }
+
     toString(){
-        return this.name + " " +
+        return this.error + " " +
                 this.message + " " +
                 this.status;
     }

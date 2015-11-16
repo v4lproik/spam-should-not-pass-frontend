@@ -11,3 +11,11 @@
     margin-right: auto;
     margin-bottom: 15px;
 }
+
+.remove-padding-left{
+    padding-left: 0 !important;
+}
+
+.remove-padding-right{
+    padding-right: 0 !important;
+}

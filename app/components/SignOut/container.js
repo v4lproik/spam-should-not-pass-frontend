@@ -4,7 +4,7 @@ import { Link, IndexLink } from 'react-router';
 import Navbar from '../Navbar/container.js';
 import AuthService from '../../services/AuthService.js';
 import LoginStore from '../../stores/LoginStore.js';
-import MemberInfoService from '../../services/MemberInformationService.js';
+import MemberInfoService from '../../services/MemberService.js';
 import SessionService from '../../services/SessionService.js';
 import {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin} from '../App/utility.js';
 
