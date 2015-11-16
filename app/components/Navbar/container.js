@@ -21,7 +21,8 @@ var Navbar = React.createClass({
         console.log("Verify user info with " + user.token);
 
         MemberInfoService.info(user.token)
-            .then(function(data){
+            .then(function(user){
+                LoginStore.setUser(user);
                 this.setState({
                     logged: true
                 });
@@ -58,6 +59,7 @@ var Navbar = React.createClass({
                                 </ul>
                                     { this.state.logged ?
                                         <ul className="nav navbar-nav navbar-right">
+                                            <li><Link to="/admin">Admin</Link></li>
                                             <li><Link to="/logout">Log out</Link></li>
                                         </ul>:
                                         <ul className="nav navbar-nav navbar-right">
