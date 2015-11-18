@@ -8,17 +8,18 @@ class AuthService {
 
         var data = {"email": username, "password": password};
         var url = "/user/auth";
-        var token = "";
+        var token = null;
 
         return Client.postSync(url, data, token)
             .then(function(data){
 
                 if (typeof data.user !== undefined) {
                     console.log("Know user");
-
                     var user = data.user;
                     user.token = {};
                     user.token = data.token;
+
+                    console.log(user);
 
                     return user;
                 }

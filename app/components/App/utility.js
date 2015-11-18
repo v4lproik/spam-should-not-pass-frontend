@@ -1,3 +1,5 @@
+import LoginStore from '../../stores/LoginStore.js';
+
 function redirectionError(history, code) {
 
     if (typeof code === undefined && code === 'null' && code === ''){
@@ -21,6 +23,10 @@ function redirectionError(history, code) {
     }
 }
 
+function redirectionSignup(history) {
+    history.pushState(null, '/signup');
+}
+
 function redirectionSessionExpired(history) {
     history.pushState(null, '/session-expired');
 }
@@ -30,7 +36,8 @@ function redirectionUnauthorised(history) {
 }
 
 function redirectionAdmin(history) {
-    history.pushState(null, '/admin');
+    window.location = 'http://localhost:3000/admin';
+    //history.pushState(null, '/admin');
 }
 
-export {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin}
+export {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin, redirectionSignup}

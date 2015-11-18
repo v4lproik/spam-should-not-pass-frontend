@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/container.js';
-import {redirectionError, redirectionAdmin} from '../App/utility.js';
+import {redirectionError, redirectionAdmin, redirectionSignup} from '../App/utility.js';
 import AuthService from '../../services/AuthService.js';
 import MemberInfoService from '../../services/MemberService.js';
 import LoginStore from '../../stores/LoginStore.js';
@@ -16,8 +16,9 @@ require('../../public/img/key-login.jpg');
 
 var SignIn = React.createClass({
 
-    componentDidMount: function() {
+    componentWillMount: function() {
         var user = LoginStore.getUser();
+        var history = this.props.history;
 
         if (user === null) {
             return;
@@ -25,13 +26,11 @@ var SignIn = React.createClass({
 
         MemberInfoService.info(user.token)
             .then(function(data){
-                console.log(data);
-                redirectionAdmin(this.props.history);
+                redirectionAdmin(history);
             }.bind(this))
             .catch(function(err){
-                console.error(err);
                 if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.code);
+                    redirectionError(history, err.code);
                 }
             }.bind(this));
     },
@@ -50,7 +49,7 @@ var SignIn = React.createClass({
 
                 MemberInfoService.info(user.token)
                     .then(function(data){
-                        this.props.history.pushState(null, '/admin');
+                        redirectionAdmin(this.props.history);
                     }.bind(this))
                     .catch(function(err){
                         if(err instanceof PlatformException.constructor){
@@ -60,6 +59,7 @@ var SignIn = React.createClass({
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
+                    console.log(err.code);
                     redirectionError(this.props.history, err.code);
                 }
             }.bind(this));

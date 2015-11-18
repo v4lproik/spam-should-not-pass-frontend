@@ -12,9 +12,14 @@ class MemberInformationService {
 
         var url = "/user/info";
 
-        return Client.postSync(url, null, token).then(function(data){
+        return Client.postSync(url, {}, token).then(function(data){
+            console.log("info for member");
             console.log(data);
+
             if (typeof data.user !== undefined) {
+                data.user.token = {};
+                data.user.token = token;
+
                 return data.user;
             }
 
@@ -38,6 +43,7 @@ class MemberInformationService {
 
             return null;
         }).catch(function(err){
+            console.error(err);
             throw err;
         });
     }

@@ -59,7 +59,7 @@ var Navbar = React.createClass({
                                 </ul>
                                     { this.state.logged ?
                                         <ul className="nav navbar-nav navbar-right">
-                                            <li><Link to="/admin">Admin</Link></li>
+                                            <li><a href="http://localhost:3000/admin/">Admin</a></li>
                                             <li><Link to="/logout">Log out</Link></li>
                                         </ul>:
                                         <ul className="nav navbar-nav navbar-right">

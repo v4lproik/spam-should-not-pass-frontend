@@ -7,9 +7,10 @@ import MemberInfoService from '../../services/MemberService.js';
 import SessionService from '../../services/SessionService.js';
 import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../App/utility.js';
 
-require('../../../node_modules/admin-lte/dist/css/AdminLTE.min.css');
-require('../../../node_modules/admin-lte/dist/js/app.min.js');
+require('../../../node_modules/admin-lte/dist/css/AdminLTE.css');
+require('../../public/css/admin.css');
 require('../../../node_modules/admin-lte/dist/css/skins/_all-skins.min.css');
+require('../../../node_modules/admin-lte/dist/js/app.min');
 
 var Admin = React.createClass({
 
@@ -19,7 +20,7 @@ var Admin = React.createClass({
         };
     },
 
-    componentDidMount: function() {
+    componentWillMount: function() {
         var user = LoginStore.getUser();
 
         if (user === null) {
@@ -33,6 +34,7 @@ var Admin = React.createClass({
 
         MemberInfoService.info(user.token)
             .then(function(data){
+                LoginStore.setUser(data);
                 this.setState({
                     username: data.nickName
                 });
@@ -49,15 +51,6 @@ var Admin = React.createClass({
             <div className="wrapper">
                 <aside className="main-sidebar">
                     <section className="sidebar">
-                        <div className="user-panel">
-                            <div className="pull-left image">
-                                <img src="img/user2-160x160.jpg" className="img-circle" alt="User Image" />
-                            </div>
-                            <div className="pull-left info">
-                                <p>Corporation Name</p>
-                            </div>
-                        </div>
-
                         <form action="#" method="get" className="sidebar-form">
                             <div className="input-group">
                                 <input type="text" name="q" className="form-control" placeholder="Search..." />
@@ -71,14 +64,14 @@ var Admin = React.createClass({
                             <li className="treeview">
                                 <a href="#"><i className="fa fa-link"></i> <span>Scheme</span> <i className="fa fa-angle-left pull-right"></i></a>
                                 <ul className="treeview-menu">
-                                    <li><a href="#">Add a new scheme</a></li>
+                                    <li><Link to="/admin/scheme">Add a new scheme</Link></li>
                                     <li><a href="#">See your schemes</a></li>
                                 </ul>
                             </li>
                             <li className="treeview">
                                 <a href="#"><i className="fa fa-link"></i> <span>Rule</span> <i className="fa fa-angle-left pull-right"></i></a>
                                 <ul className="treeview-menu">
-                                    <li><a href="#">Add a new rule</a></li>
+                                    <li><Link to="/admin/rule">Add a new rule</Link></li>
                                     <li><a href="#">See your rules</a></li>
                                 </ul>
                             </li>
@@ -94,17 +87,7 @@ var Admin = React.createClass({
                 </aside>
 
                 <div className="content-wrapper">
-                    <section className="content-header">
-                        <h1>
-                            Page Header
-                            <small>Optional description</small>
-                        </h1>
-                    </section>
-
-                    <section className="content">
-
-
-                    </section>
+                    {this.props.children}
                 </div>
 
                 <footer className="main-footer">

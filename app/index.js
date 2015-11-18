@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App/container.js';
 import Admin from './components/Admin/admin.js';
+import Rule from './components/Admin/rule.js';
+import Scheme from './components/Admin/scheme.js';
+import Dashboard from './components/Admin/dashboard.js';
 import Navbar from './components/Navbar/container.js';
 import SignIn from './components/SignIn/container.js';
 import SignUp from './components/SignUp/container.js';
@@ -15,7 +18,11 @@ import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 ReactDOM.render(
     <Router history={createBrowserHistory()}>
-        <Route path="/admin" component={Admin} />
+        <Route path="/admin" component={Admin}>
+            <Route path="rule" component={Rule}/>
+            <Route path="dashboard" component={Dashboard}/>
+            <Route path="scheme" component={Scheme}/>
+        </Route>
         <Route path="/error403" component={Error403} />
         <Route path="/session-expired" component={SessionExpired} />
         <Route path="/error401" component={Error401} />

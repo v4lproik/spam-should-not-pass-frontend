@@ -18,8 +18,9 @@ require('../../public/img/key-login.jpg');
 
 var SignIn = React.createClass({
 
-    componentDidMount: function() {
+    componentWillMount: function() {
         var user = LoginStore.getUser();
+        var history = this.props.history;
 
         if (user === null) {
             return;
@@ -27,11 +28,11 @@ var SignIn = React.createClass({
 
         MemberInfoService.info(user.token)
             .then(function(data){
-                redirectionAdmin(this.props.history);
+                redirectionAdmin(history);
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.status);
+                    redirectionError(history, err.code);
                 }
             }.bind(this));
     },
