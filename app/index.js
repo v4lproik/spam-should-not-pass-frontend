@@ -12,6 +12,7 @@ import SignUpConfirmation from './components/SignUp/confirmation.js';
 import SignOut from './components/SignOut/container.js';
 import Error403 from './components/Error/error403.js';
 import SessionExpired from './components/Error/session.js';
+import Unavailable from './components/Error/unavailable.js';
 import Error401 from './components/Error/error401.js';
 import { Router, Route, Link, IndexRoute } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
@@ -26,6 +27,7 @@ ReactDOM.render(
         <Route path="/error403" component={Error403} />
         <Route path="/session-expired" component={SessionExpired} />
         <Route path="/error401" component={Error401} />
+        <Route path="/unavailable" component={Unavailable} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signup/confirmation" component={SignUpConfirmation} />

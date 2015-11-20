@@ -37,7 +37,6 @@ function redirectionUnauthorised(history) {
 
 function redirectionAdmin(history) {
     window.location = 'http://localhost:3000/admin';
-    //history.pushState(null, '/admin');
 }
 
 export {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin, redirectionSignup}

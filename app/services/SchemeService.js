@@ -32,7 +32,7 @@ class SchemeService {
         var data ={'id': userId};
 
         return Client.postSync(url, data, token).then(function(data){
-            console.log("info for scheme");
+            console.log("info for spammer scheme");
             console.log(data);
 
             if (typeof data.scheme !== undefined) {
@@ -44,6 +44,28 @@ class SchemeService {
         }).catch(function(err){
             throw err;
         });
+    }
+
+    addSchemeSpammer(scheme, token) {
+
+        var url = "/spammer/create-spammer-document";
+        var data ={'properties': scheme};
+
+        return Client.postSync(url, data, token)
+            .catch(function(err){
+            throw err;
+        });
+    }
+
+    addSchemeSpam(scheme, token) {
+
+        var url = "/spam/create-spam-document";
+        var data ={'properties': scheme};
+
+        return Client.postSync(url, data, token)
+            .catch(function(err){
+                throw err;
+            });
     }
 }
 

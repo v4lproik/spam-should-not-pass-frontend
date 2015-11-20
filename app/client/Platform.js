@@ -26,7 +26,8 @@ class Platform{
                     cache: false,
                     contentType: 'application/json',
                     url: "http://localhost:8080" + url,
-                    data: JSON.stringify(data)
+                    data: JSON.stringify(data),
+                    dataType: 'json'
                 });
 
                 promise.done(function (results) {
@@ -35,6 +36,7 @@ class Platform{
                         console.error(results);
                         reject(new PlatformException.constructor(results.status, results.status, results.error, results.message));
                     }
+                    console.log(results);
                     resolve(results);
                 });
 
