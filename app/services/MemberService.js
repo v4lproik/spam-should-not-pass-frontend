@@ -13,8 +13,6 @@ class MemberInformationService {
         var url = "/user/info";
 
         return Client.postSync(url, {}, token).then(function(data){
-            console.log("info for member");
-            console.log(data);
 
             if (typeof data.user !== undefined) {
                 data.user.token = {};
@@ -31,19 +29,11 @@ class MemberInformationService {
 
     create(firstname, lastname, email, corporation, password) {
 
-        console.log("Create user");
-
         var url = "/user/create";
         var data = {"firstname": firstname, "lastname": lastname, "email": email, "password": password, "corporation": corporation, "permission": this.defaultPermission, "status": this.defaultStatus};
 
-        return Client.postSync(url, data, null).then(function(data){
-            if (typeof data.user !== undefined) {
-                return data;
-            }
-
-            return null;
-        }).catch(function(err){
-            console.error(err);
+        return Client.postSync(url, data, null)
+            .catch(function(err){
             throw err;
         });
     }

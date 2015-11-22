@@ -1,7 +1,8 @@
 class SessionService {
 
     constructor(){
-        this.sessionTimeValidity = 15*60*1000;
+        this.sessionTimeValidityInMinute = 60;
+        this.sessionTimeValidity = this.sessionTimeValidityInMinute*60*1000;
     }
 
     isValid(lastUpdate) {

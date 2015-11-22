@@ -16,23 +16,10 @@ require('../../public/img/key-login.jpg');
 
 var SignIn = React.createClass({
 
-    componentWillMount: function() {
-        var user = LoginStore.getUser();
-        var history = this.props.history;
-
-        if (user === null) {
-            return;
-        }
-
-        MemberInfoService.info(user.token)
-            .then(function(data){
-                redirectionAdmin(history);
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    redirectionError(history, err.code);
-                }
-            }.bind(this));
+    getInitialState: function() {
+        return {
+            error: false
+        };
     },
 
     handleSubmit: function(e) {
@@ -61,11 +48,24 @@ var SignIn = React.createClass({
                 if(err instanceof PlatformException.constructor){
                     console.log(err.code);
                     redirectionError(this.props.history, err.code);
+
+                    this.setState({
+                        error: true
+                    });
                 }
             }.bind(this));
     },
 
+    isError: function(){
+        if(this.state.error){
+            return(<div className="alert alert-danger fade in">
+                <center><strong>Password or username </strong> is wrong.</center>
+            </div>);
+        }
+    },
+
     render: function() {
+
         return (
             <div>
                 <div id="login-box" className="container">
@@ -86,6 +86,7 @@ var SignIn = React.createClass({
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-12 col-md-10  col-md-offset-1 ">
+                                                    {this.isError()}
                                                     <div className="form-group">
                                                         <div className="input-group">
 												<span className="input-group-addon">

@@ -23,27 +23,7 @@ var Admin = React.createClass({
     componentWillMount: function() {
         var user = LoginStore.getUser();
 
-        if (user === null) {
-            redirectionUnauthorised(this.props.history);
-        }
-
-        if (!SessionService.isValid(user.lastUpdate)){
-            LoginStore.clearUser();
-            redirectionSessionExpired(this.props.history);
-        }
-
-        MemberInfoService.info(user.token)
-            .then(function(data){
-                LoginStore.setUser(data);
-                this.setState({
-                    username: data.nickName
-                });
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.code);
-                }
-            }.bind(this));
+        console.log("call from /admin");
     },
 
     render: function() {
@@ -51,6 +31,11 @@ var Admin = React.createClass({
             <div className="wrapper">
                 <aside className="main-sidebar">
                     <section className="sidebar">
+
+                        <ul className="sidebar-menu">
+                            <li className="header">HOME</li>
+                        </ul>
+
                         <form action="#" method="get" className="sidebar-form">
                             <div className="input-group">
                                 <input type="text" name="q" className="form-control" placeholder="Search..." />
@@ -61,27 +46,21 @@ var Admin = React.createClass({
                         </form>
 
                         <ul className="sidebar-menu">
-                            <li className="treeview">
-                                <a href="#"><i className="fa fa-link"></i> <span>Scheme</span> <i className="fa fa-angle-left pull-right"></i></a>
-                                <ul className="treeview-menu">
-                                    <li><Link to="/admin/scheme">Add a new scheme</Link></li>
-                                    <li><a href="#">See your schemes</a></li>
-                                </ul>
-                            </li>
-                            <li className="treeview">
-                                <a href="#"><i className="fa fa-link"></i> <span>Rule</span> <i className="fa fa-angle-left pull-right"></i></a>
-                                <ul className="treeview-menu">
-                                    <li><Link to="/admin/rule">Add a new rule</Link></li>
-                                    <li><a href="#">See your rules</a></li>
-                                </ul>
-                            </li>
-                            <li className="treeview">
-                                <a href="#"><i className="fa fa-link"></i> <span>Statistics</span> <i className="fa fa-angle-left pull-right"></i></a>
-                                <ul className="treeview-menu">
-                                    <li><a href="#">Spammer</a></li>
-                                    <li><a href="#">Spam</a></li>
-                                </ul>
-                            </li>
+                            <li className="header">MAIN NAVIGATION</li>
+                            <li className="active bottom-line"><Link to="/admin"><i className="fa fa-link"></i> <span>Dashboard</span></Link></li>
+                            <li><Link to="/admin/scheme"><i className="fa fa-link"></i> <span>Scheme</span></Link></li>
+                            <li className="bottom-line"><Link to="/admin/rule/list"><i className="fa fa-link"></i> <span>Rule</span></Link></li>
+                            <li><Link to="/admin/scheme"><i className="fa fa-link"></i> <span>API</span></Link></li>
+                            <li className="header">USER</li>
+                            <li className="bottom-line"><Link to="/admin/profile"><i className="fa fa-link"></i> <span>Profile</span></Link></li>
+                            <li className="bottom-line"><Link to="/admin/settings"><i className="fa fa-link"></i> <span>Settings</span></Link></li>
+                            <li className="bottom-line"><Link to="/logout"><i className="fa fa-link"></i> <span>Logout</span></Link></li>
+                            <li className="header">HELP</li>
+                            <li className="bottom-line"><Link to="/admin/faq"><i className="fa fa-link"></i> <span>FAQ</span></Link></li>
+                            <li className="bottom-line"><Link to="/admin/documentation"><i className="fa fa-link"></i> <span>Documentation</span></Link></li>
+                        </ul>
+                        <ul className="sidebar-menu" id="bars">
+                            <li><Link to="/"><i className="fa fa-link"></i> <span>Main Website</span></Link></li>
                         </ul>
                     </section>
                 </aside>

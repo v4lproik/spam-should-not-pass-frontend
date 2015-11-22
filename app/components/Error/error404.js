@@ -5,16 +5,16 @@ import { Link, IndexLink } from 'react-router';
 //css
 require('../../public/css/error.css');
 
-var error401 = React.createClass({
+var error404 = React.createClass({
     render: function() {
         return (
             <div id="error-container">
                 <section className="error-content error-403 js-error-container">
                     <section className="error-details">
                         <section className="error-message">
-                            <h1 className="error-code">401</h1>
-                            <h2 className="error-description">Forbidden</h2>
-                            <a href="http://localhost:3000/signin" className="error-link" >Go to the signin page →</a>
+                            <h1 className="error-code">404</h1>
+                            <h2 className="error-description">Not found</h2>
+                            <IndexLink to="/" className="error-link" >Go to the front page →</IndexLink>
                         </section>
                     </section>
                 </section>
@@ -23,4 +23,4 @@ var error401 = React.createClass({
     }
 });
 
-module.exports = error401;
+module.exports = error404;
