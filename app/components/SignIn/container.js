@@ -112,12 +112,16 @@ var SignIn = React.createClass({
                                     </form>
                                 </div>
                                 <div className="panel-footer ">
-                                    Don't have an account! <Link to="/signup">Sign Up Here </Link>
+                                    Don't have an account! <Link to="/signup">Sign Up Here </Link><br />
+                                    Go back to main website! <Link to="/">Click Here </Link>
                                 </div>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
+
             </div>
         )
     }
