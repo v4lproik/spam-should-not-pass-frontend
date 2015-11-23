@@ -63,54 +63,84 @@ var Scheme = React.createClass({
             }.bind(this));
     },
 
-    handleSubmitx: function(e) {
+    handleSubmitSpam: function(e) {
         e.preventDefault();
         var variableType = this.refs.variableType.value.trim();
-        var variableName = this.refs.variableName.value.trim();
-        var variableScheme = this.refs.variableScheme.value.trim();
+        var variableName = this.refs.variableNameSpam.value.trim();
 
-        if (!variableName || !variableType || !variableScheme) {
+        if (!variableType || !variableName) {
             return;
         }
 
-        if(variableScheme === 'spammer'){
-            var properties = [];
-            properties = $.parseJSON(this.state.spammerScheme.properties);
 
-            var newArray = {};
-            newArray.variableType = variableType;
-            newArray.variableName = variableName;
+        var properties = [];
+        properties = $.parseJSON(this.state.spamScheme.properties);
 
-            properties.push(newArray);
+        var newArray = {};
+        newArray.variableType = variableType;
+        newArray.variableName = variableName;
 
-            var user = LoginStore.getUser();
+        properties.push(newArray);
 
-            if (typeof user === 'undefined') {
-                redirectionUnauthorised(this.props.history);
-            }
+        var user = LoginStore.getUser();
 
-            SchemeService.addSchemeSpammer(properties, user.token);
-
-        }else{
-            if(variableScheme === 'spam'){
-                var properties = [];
-                properties = $.parseJSON(this.state.spamScheme.properties);
-
-                var newArray = {};
-                newArray.variableType = variableType;
-                newArray.variableName = variableName;
-
-                properties.push(newArray);
-
-                var user = LoginStore.getUser();
-
-                if (typeof user === 'undefined') {
-                    redirectionUnauthorised(this.props.history);
-                }
-
-                SchemeService.addSchemeSpam(properties, user.token);
-            }
+        if (typeof user === 'undefined') {
+            redirectionUnauthorised(this.props.history);
         }
+
+        SchemeService.addSchemeSpam(properties, user.token);
+
+        SchemeService.schemeSpammer(user.id, user.token)
+            .then(function(schemeSpammer){
+
+                SchemeService.schemeSpam(user.id, user.token)
+                    .then(function(schemeSpam){
+                        this.setState({
+                            spammerScheme: schemeSpammer,
+                            spamScheme: schemeSpam
+                        });
+
+                    }.bind(this))
+                    .catch(function(err){
+                        if(err instanceof PlatformException.constructor){
+                            redirectionError(this.props.history, err.code);
+                        }
+                    }.bind(this));
+
+            }.bind(this))
+            .catch(function(err){
+                if(err instanceof PlatformException.constructor){
+                    redirectionError(this.props.history, err.code);
+                }
+            }.bind(this));
+    },
+
+    handleSubmitSpammer: function(e) {
+        e.preventDefault();
+        var variableType = this.refs.variableType.value.trim();
+        var variableName = this.refs.variableNameSpammer.value.trim();
+
+        if (!variableType || !variableName) {
+            return;
+        }
+
+        var properties = [];
+        properties = $.parseJSON(this.state.spammerScheme.properties);
+
+        var newArray = {};
+        newArray.variableType = variableType;
+        newArray.variableName = variableName;
+
+        properties.push(newArray);
+
+        var user = LoginStore.getUser();
+
+        if (typeof user === 'undefined') {
+            redirectionUnauthorised(this.props.history);
+        }
+
+        SchemeService.addSchemeSpammer(properties, user.token);
+
 
         SchemeService.schemeSpammer(user.id, user.token)
             .then(function(schemeSpammer){
@@ -165,9 +195,9 @@ var Scheme = React.createClass({
                                     <h3 className="box-title">User Model</h3>
                                 </div>
                                 <div className="box-body">
-                                    <form role="form" onSubmit={this.handleSubmitx}>
+                                    <form role="form" onSubmit={this.handleSubmitSpammer}>
 
-                                        <table id="example2" className="table table-bordered table-hover">
+                                        <table className="table table-bordered table-hover">
                                             <thead>
                                             <tr>
                                                 <th>Type</th>
@@ -190,8 +220,7 @@ var Scheme = React.createClass({
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input className="form-control" type="text" placeholder="Default input" ref="variableName" />
-                                                    <input className="form-control" type="hidden" placeholder="Default input"  ref="variableScheme" value="spammer"/>
+                                                    <input className="form-control" type="text" placeholder="Default input" ref="variableNameSpammer" />
                                                 </td>
                                                 <td>
                                                     <input type="submit" className="btn btn-sm btn-primary btn-block" value="+" />
@@ -209,7 +238,7 @@ var Scheme = React.createClass({
                                     <h3 className="box-title">Document Model</h3>
                                 </div>
                                 <div className="box-body">
-                                    <form role="form" onSubmit={this.handleSubmitx}>
+                                    <form role="form" onSubmit={this.handleSubmitSpam}>
 
                                         <table id="example2" className="table table-bordered table-hover">
                                             <thead>
@@ -233,8 +262,8 @@ var Scheme = React.createClass({
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input className="form-control" type="text" placeholder="Default input" ref="variableName" />
-                                                    <input className="form-control" type="hidden" placeholder="Default input"  ref="variableScheme" value="spam"/>
+                                                    <input className="form-control" type="text" placeholder="Default input" ref="variableNameSpam" />
+                                                    <input className="form-control" type="hidden" ref="variableScheme" value="spam"/>
                                                 </td>
                                                 <td>
                                                     <input type="submit" className="btn btn-sm btn-primary btn-block" value="+" />

@@ -127,7 +127,7 @@ var RuleDetail = React.createClass({
                                 </div>
                             </div>
                             <div className="box-footer">
-                                <input type="submit" value="Modify" className="btn btn-primary" ref="Modify" data-name="modify" onClick={this.setAction.bind(this, 'modify')}/>&nbsp;&nbsp;
+                                <input type="submit" value="Modify" className="btn btn-primary" ref="Modify" onClick={this.setAction.bind(this, 'modify')}/>&nbsp;&nbsp;
                                 <input type="submit" value="Delete" className="btn btn-primary" ref="Delete" onClick={this.setAction.bind(this, 'delete')}/>
                                 <Link to="/admin/rule/list" type="submit" className="btn btn-danger pull-right">Cancel</Link>
                             </div>
