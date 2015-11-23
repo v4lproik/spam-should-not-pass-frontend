@@ -7,7 +7,7 @@ import MemberInfoService from '../../services/MemberService.js';
 import LoginStore from '../../stores/LoginStore.js';
 import PlatformException from '../../models/PlatformException.js';
 import { Link, IndexLink } from 'react-router';
-import Validator from 'validator';
+import Validator from 'bootstrap-validator';
 
 //css
 require('../../public/css/login.css');
