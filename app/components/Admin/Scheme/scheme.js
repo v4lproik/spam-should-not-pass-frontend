@@ -6,7 +6,7 @@ import PlatformException from '../../../models/PlatformException.js';
 import MemberInfoService from '../../../services/MemberService.js';
 import SchemeService from '../../../services/SchemeService.js';
 import SessionService from '../../../services/SessionService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../App/utility.js';
+import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../App/Utility/redirection.js';
 
 var Scheme = React.createClass({
 
@@ -153,7 +153,7 @@ var Scheme = React.createClass({
             <div>
                 <section className="content-header">
                     <h1>
-                        Scheme
+                        Schemes
                     </h1>
                 </section>
 
@@ -162,7 +162,7 @@ var Scheme = React.createClass({
                         <div className="col-xs-6">
                             <div className="box box-primary">
                                 <div className="box-header with-border">
-                                    <h3 className="box-title">User Spammer Model</h3>
+                                    <h3 className="box-title">User Model</h3>
                                 </div>
                                 <div className="box-body">
                                     <form role="form" onSubmit={this.handleSubmitx}>
@@ -206,7 +206,7 @@ var Scheme = React.createClass({
                         <div className="col-xs-6">
                             <div className="box box-primary">
                                 <div className="box-header with-border">
-                                    <h3 className="box-title">Document Spam Model</h3>
+                                    <h3 className="box-title">Document Model</h3>
                                 </div>
                                 <div className="box-body">
                                     <form role="form" onSubmit={this.handleSubmitx}>

@@ -2,15 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App/container.js';
 import Admin from './components/Admin/admin.js';
-import RuleDetails from './components/Admin/Rule/rule_details.js';
-import RuleAdd from './components/Admin/Rule/rule_add.js';
-import RuleIndex from './components/Admin/Rule/rule_index.js';
+import RuleDetails from './components/Admin/Rule/details.js';
+import RuleAdd from './components/Admin/Rule/add.js';
+import RuleIndex from './components/Admin/Rule/index.js';
 import SettingsIndex from './components/Admin/Settings/index.js';
 import ApiIndex from './components/Admin/Api/index.js';
 import DocIndex from './components/Admin/Documentation/index.js';
 import FaqIndex from './components/Admin/Faq/index.js';
 import ProfileIndex from './components/Admin/Profile/index.js';
-import RuleList from './components/Admin/Rule/rule_list.js';
+import RuleList from './components/Admin/Rule/list.js';
 import Scheme from './components/Admin/Scheme/scheme.js';
 import Dashboard from './components/Admin/Dashboard/dashboard.js';
 import Navbar from './components/Navbar/container.js';
@@ -79,7 +79,7 @@ ReactDOM.render(
             <Route path="rule" component={RuleIndex}>
                 <IndexRoute component={RuleList} onEnter={requireAuth}/>
                 <Route path="list" component={RuleList} onEnter={requireAuth}/>
-                <Route path="detail" component={RuleDetails} onEnter={requireAuth}/>
+                <Route path="detail/:ruleID" component={RuleDetails} onEnter={requireAuth}/>
                 <Route path="add" component={RuleAdd} onEnter={requireAuth}/>
             </Route>
         </Route>

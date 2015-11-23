@@ -6,7 +6,7 @@ import PlatformException from '../../../models/PlatformException.js';
 import MemberInfoService from '../../../services/MemberService.js';
 import SessionService from '../../../services/SessionService.js';
 import RuleService from '../../../services/RuleService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../App/utility.js';
+import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../App/Utility/redirection.js';
 
 var RuleList = React.createClass({
 
@@ -48,16 +48,7 @@ var RuleList = React.createClass({
     },
 
     handleClick: function(id) {
-        var res;
-        for(var i=0; i<this.state.rules.length;i++){
-            if(this.state.rules[i].id === id){
-                res = i;
-                break;
-            }
-        }
-        if(res !== 'undefined'){
-            this.props.history.replaceState({rule: this.state.rules[res]}, '/admin/rule/detail');
-        }
+        this.props.history.pushState(null, '/admin/rule/detail/' + id);
     },
 
     render: function() {
@@ -69,7 +60,7 @@ var RuleList = React.createClass({
                 <div className="col-xs-6">
                     <div className="box box-primary">
                         <div className="box-header">
-                            <h3 className="box-title">User Spammer Model</h3>
+                            <h3 className="box-title">User Rules</h3>
                             <Link to="/admin/rule/add" type="submit" className="btn btn-primary btn-sm place-right">+</Link>
                         </div>
                         <div className="box-body">
@@ -84,7 +75,7 @@ var RuleList = React.createClass({
                                     </thead>
                                     <tbody>
                                     {rules.map(function(value){
-                                        if(value.type === 'SPAM'){
+                                        if(value.type === 'SPAMMER'){
                                             return(
                                                 <tr onClick={this.handleClick.bind(this, value.id)}><td>{value.name}</td><td>{value.rule}</td></tr>
                                             )
@@ -99,7 +90,8 @@ var RuleList = React.createClass({
                 <div className="col-xs-6">
                     <div className="box box-primary">
                         <div className="box-header">
-                            <h3 className="box-title">Document Spam Model</h3>
+                            <h3 className="box-title">Document Rules</h3>
+                            <Link to="/admin/rule/add" type="submit" className="btn btn-primary btn-sm place-right">+</Link>
                         </div>
                         <div className="box-body">
                             <form role="form" onSubmit={this.handleSubmitx}>
@@ -113,10 +105,12 @@ var RuleList = React.createClass({
                                     </thead>
                                     <tbody>
                                     {rules.map(function(value){
-                                        if(value.type === 'SPAMMER'){
-                                            return (<tr><td>{value.name}</td><td>{value.rule}</td></tr>);
+                                        if(value.type === 'SPAM'){
+                                            return(
+                                                <tr onClick={this.handleClick.bind(this, value.id)}><td>{value.name}</td><td>{value.rule}</td></tr>
+                                            )
                                         }
-                                    })}
+                                    }.bind(this))}
                                     </tbody>
                                 </table>
                             </form>

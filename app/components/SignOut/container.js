@@ -6,7 +6,7 @@ import AuthService from '../../services/AuthService.js';
 import LoginStore from '../../stores/LoginStore.js';
 import MemberInfoService from '../../services/MemberService.js';
 import SessionService from '../../services/SessionService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin} from '../App/utility.js';
+import {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin} from '../App/Utility/redirection.js';
 
 
 //css

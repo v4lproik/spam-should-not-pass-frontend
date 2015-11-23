@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/container.js';
-import {redirectionError, redirectionAdmin, redirectionSignup} from '../App/utility.js';
+import {redirectionError, redirectionAdmin, redirectionSignup} from '../App/Utility/redirection.js';
 import AuthService from '../../services/AuthService.js';
 import MemberInfoService from '../../services/MemberService.js';
 import LoginStore from '../../stores/LoginStore.js';

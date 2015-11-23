@@ -5,7 +5,7 @@ import LoginStore from '../../stores/LoginStore.js';
 import PlatformException from '../../models/PlatformException.js';
 import MemberInfoService from '../../services/MemberService.js';
 import SessionService from '../../services/SessionService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../App/utility.js';
+import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../App/Utility/redirection.js';
 
 require('../../../node_modules/admin-lte/dist/css/AdminLTE.css');
 require('../../public/css/admin.css');

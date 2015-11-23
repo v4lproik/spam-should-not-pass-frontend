@@ -1,4 +1,4 @@
-import LoginStore from '../../stores/LoginStore.js';
+import LoginStore from '../../../stores/LoginStore.js';
 
 function redirectionError(history, code) {
 
@@ -45,4 +45,33 @@ function redirectionAdmin(history) {
     window.location = 'http://localhost:3000/admin';
 }
 
-export {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin, redirectionSignup}
+export {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin, redirectionSignup};
+
+function notificationSuccess(title, message){
+    $.notify({
+            title: title,
+            message: message
+        }, {
+            type: 'success'
+        }
+    );
+}
+
+function notificationAlert(title, message){
+    $.notify({
+        title: title,
+        message: message
+    }, {
+        type: 'danger',
+        placement: {
+            from: "top",
+            align: "right"
+        },
+        animate: {
+            enter: 'animated zoomInDown',
+            exit: 'animated zoomOutUp'
+        }
+    });
+}
+
+export {notificationAlert, notificationSuccess};

@@ -6,7 +6,7 @@ import PlatformException from '../../../models/PlatformException.js';
 import MemberInfoService from '../../../services/MemberService.js';
 import SessionService from '../../../services/SessionService.js';
 import RuleService from '../../../services/RuleService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../App/utility.js';
+import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../App/Utility/redirection.js';
 
 var RuleDetail = React.createClass({
 
@@ -23,9 +23,6 @@ var RuleDetail = React.createClass({
         var user = LoginStore.getUser();
 
         console.log("call from /rule_details");
-
-        console.log(this.state.rule);
-
 
             if(this.state.rule){
                 //redirectionError(this.props.history, 404);
@@ -91,9 +88,10 @@ var RuleDetail = React.createClass({
         return (
             <div className="row">
                 <div className="col-xs-12">
+
                 <div className="box box-primary">
                     <div className="box-header with-border">
-                        <h3 className="box-title">Details</h3>
+                        <h3 className="box-title">Rule details</h3>
                     </div>
                     {this.isError()}
                     {this.isSuccess()}
@@ -112,12 +110,11 @@ var RuleDetail = React.createClass({
                                 </select>
                             </div>
                             <div className="form-group">
-                                <pre className="prettyprint" ref="rule"></pre>
+                                <textarea className="form-control" rows="5" ref="rule"></textarea>
                             </div>
                         </div>
                         <div className="box-footer">
-                            <button type="submit" className="btn btn-primary">Modify</button>&nbsp;&nbsp;
-                            <button type="submit" className="btn btn-primary">Delete</button>
+                            <button type="submit" className="btn btn-primary">Submit</button>
                             <Link to="/admin/rule/list" type="submit" className="btn btn-danger pull-right">Cancel</Link>
                         </div>
                     </form>
