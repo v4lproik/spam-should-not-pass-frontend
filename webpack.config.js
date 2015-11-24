@@ -53,6 +53,9 @@ config = {
             'validator': pathToBootstrapValidator
         }
     },
+    resolveLoader: {
+        root: path.join(__dirname, "node_modules")
+    },
     devServer: {
         historyApiFallback: true
     }
