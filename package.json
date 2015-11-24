@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prestart": "npm install",
     "prestart": "NODE_ENV=production webpack -p",
     "start": "./node_modules/http-server/bin/http-server -p 3000 ./build/",
     "build": "webpack",
