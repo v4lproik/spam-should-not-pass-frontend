@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production webpack -p",
-    "postinstall": "node server",
+    "poststart": "node server",
     "build": "webpack",
     "dev": "webpack-dev-server --port=3000 --devtool eval --progress --colors --hot --content-base build"
   },
