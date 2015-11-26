@@ -3,11 +3,12 @@
 
 ## Features implemented
 
-It provides a simple frontend that renders a nice and clean website and a user administration
+It provides a simple (client side rendering) frontend that renders a nice and clean website and a user administration
 
 ## Techno
 
-- ReactJS 0.14.2
+- ReactJS 0.14.3
+- Express 4
 - Bootstrap 3
 - Babel / ES2015
 - Webpack
@@ -16,7 +17,7 @@ It provides a simple frontend that renders a nice and clean website and a user a
 
 - Your brain
 
-## Installation
+## Dev Mode
 
 1. Clone the repository
 2. `cd` to the created directory.
@@ -24,3 +25,7 @@ It provides a simple frontend that renders a nice and clean website and a user a
 4. npm run build
 4. npm run dev
 5. Go to `http://localhost:3000`
+
+## Production Mode and Automatisation for ElasticBean or Whatever
+1. npm install
+2. npm start --production
