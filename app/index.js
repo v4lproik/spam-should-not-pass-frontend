@@ -29,7 +29,6 @@ import LoginStore from './stores/LoginStore.js';
 import { Router, Route, Link, IndexRoute } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 
-
 function requireAuth(nextState, replaceState) {
     var user = LoginStore.getUser();
 

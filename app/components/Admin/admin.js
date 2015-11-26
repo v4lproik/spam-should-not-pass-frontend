@@ -11,6 +11,7 @@ require('../../../node_modules/admin-lte/dist/css/AdminLTE.css');
 require('../../public/css/admin.css');
 require('../../../node_modules/admin-lte/dist/css/skins/_all-skins.min.css');
 require('../../../node_modules/admin-lte/dist/js/app.min');
+require('../../../node_modules/bootstrap-notify/');
 
 var Admin = React.createClass({
 

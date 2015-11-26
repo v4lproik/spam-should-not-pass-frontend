@@ -78,9 +78,7 @@ var RuleDetail = React.createClass({
 
         RuleService.add(newArray, user.token)
             .then(function(){
-                this.setState({
-                    success: 'The rule has been added !'
-                });
+
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
@@ -94,9 +92,6 @@ var RuleDetail = React.createClass({
     },
 
     render: function() {
-
-        var rules = this.state.rules;
-
         return (
             <div className="row">
                 <div className="col-xs-12">
@@ -115,9 +110,9 @@ var RuleDetail = React.createClass({
                                     <select className="form-control" ref="type">
                                         {this.state.type.map(function(value){
                                             if(this.state.rule.type == value.value){
-                                                return (<option value="{value.value}" selected="selected">{value.show}</option>);
+                                                return (<option value={value.value} selected="selected">{value.show}</option>);
                                             }else{
-                                                return (<option value="{value.value}">{value.show}</option>);
+                                                return (<option value={value.value}>{value.show}</option>);
                                             }
                                         }.bind(this))}
                                     </select>
@@ -132,7 +127,6 @@ var RuleDetail = React.createClass({
                                 <Link to="/admin/rule/list" type="submit" className="btn btn-danger pull-right">Cancel</Link>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>

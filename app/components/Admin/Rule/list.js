@@ -7,6 +7,7 @@ import MemberInfoService from '../../../services/MemberService.js';
 import SessionService from '../../../services/SessionService.js';
 import RuleService from '../../../services/RuleService.js';
 import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../App/Utility/redirection.js';
+import {notificationAlert, notificationSuccess} from '../../App/Utility/notification.js';
 
 var RuleList = React.createClass({
 
@@ -22,29 +23,19 @@ var RuleList = React.createClass({
 
         console.log("call from /rule_list");
 
-        MemberInfoService.info(user.token)
+        RuleService.list(user.token)
             .then(function(data){
-                LoginStore.setUser(user);
-
-                RuleService.list(user.token)
-                    .then(function(data){
-                        this.setState({
-                            username: user.nickName,
-                            rules: data
-                        });
-                    }.bind(this))
-                    .catch(function(err){
-                        if(err instanceof PlatformException.constructor){
-                            redirectionError(this.props.history, err.code);
-                        }
-                    }.bind(this));
-
+                this.setState({
+                    username: user.nickName,
+                    rules: data
+                });
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
                     redirectionError(this.props.history, err.code);
                 }
             }.bind(this));
+
     },
 
     handleClick: function(id) {
