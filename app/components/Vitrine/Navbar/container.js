@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Display } from 'react';
 import { Link, IndexLink } from 'react-router';
-import MemberInfoService from '../../services/MemberService.js';
-import LoginStore from '../../stores/LoginStore.js';
+import MemberInfoService from '../../../services/MemberService.js';
+import LoginStore from '../../../stores/LoginStore.js';
 
 var Navbar = React.createClass({
 

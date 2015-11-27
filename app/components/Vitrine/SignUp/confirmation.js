@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/container.js';
-import {redirectionError, redirectionAdmin} from '../App/Utility/redirection.js';
-import AuthService from '../../services/AuthService.js';
-import MemberInfoService from '../../services/MemberService.js';
-import LoginStore from '../../stores/LoginStore.js';
-import PlatformException from '../../models/PlatformException.js';
+import {redirectionError, redirectionAdmin} from '../../Utility/redirection.js';
+import AuthService from '../../../services/AuthService.js';
+import MemberInfoService from '../../../services/MemberService.js';
+import LoginStore from '../../../stores/LoginStore.js';
+import PlatformException from '../../../models/PlatformException.js';
 import { Link, IndexLink } from 'react-router';
 
 //css
-require('../../public/css/login.css');
+require('../../../public/css/login.css');
 
 var SignUpConfirmation = React.createClass({
 

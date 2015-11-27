@@ -2,15 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, IndexLink } from 'react-router';
 import Navbar from '../Navbar/container.js';
-import AuthService from '../../services/AuthService.js';
-import LoginStore from '../../stores/LoginStore.js';
-import MemberInfoService from '../../services/MemberService.js';
-import SessionService from '../../services/SessionService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin} from '../App/Utility/redirection.js';
+import AuthService from '../../../services/AuthService.js';
+import LoginStore from '../../../stores/LoginStore.js';
+import MemberInfoService from '../../../services/MemberService.js';
+import SessionService from '../../../services/SessionService.js';
+import {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin} from '../../Utility/redirection.js';
 
 
 //css
-require('../../public/css/error.css');
+require('../../../public/css/error.css');
 
 var SignOut = React.createClass({
 

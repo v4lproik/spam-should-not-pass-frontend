@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/container.js';
-import {redirectionError, redirectionAdmin, redirectionSignup} from '../App/Utility/redirection.js';
-import AuthService from '../../services/AuthService.js';
-import MemberInfoService from '../../services/MemberService.js';
-import LoginStore from '../../stores/LoginStore.js';
-import PlatformException from '../../models/PlatformException.js';
+import {redirectionError, redirectionAdmin, redirectionSignup} from '../../Utility/redirection.js';
+import AuthService from '../../../services/AuthService.js';
+import MemberInfoService from '../../../services/MemberService.js';
+import LoginStore from '../../../stores/LoginStore.js';
+import PlatformException from '../../../models/PlatformException.js';
 import { Link, IndexLink } from 'react-router';
 
 //css
-require('../../public/css/login.css');
+require('../../../public/css/login.css');
 
 //img
-require('../../public/img/key-login.jpg');
+require('../../../public/img/key-login.jpg');
 
 var SignIn = React.createClass({
 

@@ -1,4 +1,4 @@
-import LoginStore from '../../../stores/LoginStore.js';
+import LoginStore from '../../stores/LoginStore.js';
 
 function redirectionError(history, code) {
 

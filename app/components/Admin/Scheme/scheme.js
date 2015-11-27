@@ -6,7 +6,7 @@ import PlatformException from '../../../models/PlatformException.js';
 import MemberInfoService from '../../../services/MemberService.js';
 import SchemeService from '../../../services/SchemeService.js';
 import SessionService from '../../../services/SessionService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../App/Utility/redirection.js';
+import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../Utility/redirection.js';
 
 var Scheme = React.createClass({
 
