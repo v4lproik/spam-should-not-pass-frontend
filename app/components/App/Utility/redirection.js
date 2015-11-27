@@ -33,12 +33,12 @@ function redirectionSignup(history) {
 
 function redirectionSessionExpired(history) {
     history.pushState(null, '/session-expired');
-    window.location = 'http://localhost:3000/session-expired';
+    //window.location = 'http://localhost:3000/session-expired';
 }
 
 function redirectionUnauthorised(history) {
     history.pushState(null, '/error401');
-    window.location = 'http://localhost:3000/error401';
+    //window.location = 'http://localhost:3000/error401';
 }
 
 function redirectionAdmin(history) {

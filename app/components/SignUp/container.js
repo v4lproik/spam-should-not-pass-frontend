@@ -16,26 +16,7 @@ require('../../public/css/login.css');
 require('../../public/img/key-login.jpg');
 
 
-var SignIn = React.createClass({
-
-    componentWillMount: function() {
-        var user = LoginStore.getUser();
-        var history = this.props.history;
-
-        if (user === null) {
-            return;
-        }
-
-        MemberInfoService.info(user.token)
-            .then(function(data){
-                redirectionAdmin(history);
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    redirectionError(history, err.code);
-                }
-            }.bind(this));
-    },
+var SignUp = React.createClass({
 
     handleSubmit: function(e) {
 
@@ -106,7 +87,7 @@ var SignIn = React.createClass({
                                                             <span className="input-group-addon">
                                                                 <i className="glyphicon glyphicon-envelope"></i>
                                                             </span>
-                                                            <input type="email" className="form-control" id="inputEmail" placeholder="Email" data-error="Bruh, that email address is invalid" ref="email" required/>                                                        </div>
+                                                            <input type="email" className="form-control" id="inputEmail" placeholder="Email" data-error="Please enter a valid email" ref="email" required/>                                                        </div>
                                                     </div>
                                                     <div className="form-group">
                                                         <div className="input-group">
@@ -157,4 +138,4 @@ var SignIn = React.createClass({
     }
 });
 
-module.exports = SignIn;
+module.exports = SignUp;

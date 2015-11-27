@@ -59,7 +59,7 @@ function requireNotAuth(nextState, replaceState) {
 
     if (user !== null) {
         if (SessionService.isValid(user.lastUpdate)){
-            window.location = 'http://localhost:3000/admin';
+            replaceState({ nextPathname: nextState.location.pathname }, '/');
         }
     }
 }
