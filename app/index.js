@@ -25,6 +25,7 @@ import Unavailable from './components/Error/unavailable.js';
 import Error401 from './components/Error/error401.js';
 import SessionService from './services/SessionService.js';
 import MemberInfoService from './services/MemberService.js';
+import AuthService from './services/AuthService.js';
 import LoginStore from './stores/LoginStore.js';
 import { Router, Route, Link, IndexRoute } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
@@ -51,6 +52,17 @@ function requireAuth(nextState, replaceState) {
                     redirectionError(this.props.history, err.code);
                 }
             }.bind(this));
+    }
+}
+
+function killSession(nextState, replaceState) {
+    var user = LoginStore.getUser();
+
+    if (user !== null) {
+        AuthService.logout(user.token);
+        LoginStore.clearUser();
+    }else{
+        replaceState({ nextPathname: nextState.location.pathname }, '/');
     }
 }
 
@@ -82,7 +94,7 @@ ReactDOM.render(
                 <Route path="add" component={RuleAdd} onEnter={requireAuth}/>
             </Route>
         </Route>
-        <Route path="/logout" component={SignOut} onEnter={requireAuth}/>
+        <Route path="/logout" component={SignOut} onEnter={killSession}/>
 
         <Route path="/error403" component={Error403} />
         <Route path="/error404" component={Error404} />
