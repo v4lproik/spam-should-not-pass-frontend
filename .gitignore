@@ -5,6 +5,7 @@
 node_modules
 ncp-debug.log
 npm-debug.log
+build/*
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
