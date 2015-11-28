@@ -22,8 +22,6 @@ var Admin = React.createClass({
     },
 
     componentWillMount: function() {
-        var user = LoginStore.getUser();
-
         console.log("call from /admin");
     },
 

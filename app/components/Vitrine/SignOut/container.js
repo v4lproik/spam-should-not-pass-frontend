@@ -15,7 +15,11 @@ require('../../../public/css/error.css');
 var SignOut = React.createClass({
 
     componentDidMount: function() {
-        setInterval( () => this.props.history.replaceState(null, '/'), 5000);
+        this.interval = setInterval(() => this.props.history.replaceState(null, '/'), 1000);
+    },
+
+    componentWillUnmount: function() {
+        clearInterval(this.interval);
     },
 
     render: function() {
