@@ -21,8 +21,25 @@ var Admin = React.createClass({
         };
     },
 
-    componentWillMount: function() {
+    getCurrentUrl: function(){
+        return window.location.pathname + window.location.search;
+    },
+
+    componentDidMount: function() {
         console.log("call from /admin");
+    },
+
+    getCSSClass: function(category){
+        var url = this.getCurrentUrl();
+
+        if(category === ''){
+            if(url === '/admin' || url === '/admin/'){
+                return 'active bottom-line';
+            }
+            return 'bottom-line';
+        }
+
+        return url.indexOf(category) > -1 ? 'active bottom-line' : 'bottom-line';
     },
 
     render: function() {
@@ -43,20 +60,21 @@ var Admin = React.createClass({
                                 </span>
                             </div>
                         </form>
-
                         <ul className="sidebar-menu">
-                            <li className="header">MAIN NAVIGATION</li>
-                            <li className="active bottom-line"><Link to="/admin"><i className="fa fa-link"></i> <span>Dashboard</span></Link></li>
-                            <li><Link to="/admin/scheme"><i className="fa fa-link"></i> <span>Scheme</span></Link></li>
-                            <li className="bottom-line"><Link to="/admin/rule/list"><i className="fa fa-link"></i> <span>Rule</span></Link></li>
-                            <li><Link to="/admin/scheme"><i className="fa fa-link"></i> <span>API</span></Link></li>
+
+                            <li className="header">MAIN</li>
+                            <li className={this.getCSSClass('')}><Link to="/admin"><i className="fa fa-link"></i> <span>Dashboard</span></Link></li>
+                            <li className={this.getCSSClass('scheme')}><Link to="/admin/scheme"><i className="fa fa-link"></i> <span>Scheme</span></Link></li>
+                            <li className={this.getCSSClass('rule')}><Link to="/admin/rule/list"><i className="fa fa-link"></i> <span>Rule</span></Link></li>
+                            <li className={this.getCSSClass('context')}><Link to="/admin/context/list"><i className="fa fa-link"></i> <span>Context</span></Link></li>
+                            <li className={this.getCSSClass('api')}><Link to="/admin/scheme"><i className="fa fa-link"></i> <span>API</span></Link></li>
                             <li className="header">USER</li>
-                            <li className="bottom-line"><Link to="/admin/profile"><i className="fa fa-link"></i> <span>Profile</span></Link></li>
-                            <li className="bottom-line"><Link to="/admin/settings"><i className="fa fa-link"></i> <span>Settings</span></Link></li>
+                            <li className={this.getCSSClass('profile')}><Link to="/admin/profile"><i className="fa fa-link"></i> <span>Profile</span></Link></li>
+                            <li className={this.getCSSClass('settings')}><Link to="/admin/settings"><i className="fa fa-link"></i> <span>Settings</span></Link></li>
                             <li className="bottom-line"><Link to="/logout"><i className="fa fa-link"></i> <span>Logout</span></Link></li>
                             <li className="header">HELP</li>
-                            <li className="bottom-line"><Link to="/admin/faq"><i className="fa fa-link"></i> <span>FAQ</span></Link></li>
-                            <li className="bottom-line"><Link to="/admin/documentation"><i className="fa fa-link"></i> <span>Documentation</span></Link></li>
+                            <li className={this.getCSSClass('faq')}><Link to="/admin/faq"><i className="fa fa-link"></i> <span>FAQ</span></Link></li>
+                            <li className={this.getCSSClass('documentation')}><Link to="/admin/documentation"><i className="fa fa-link"></i> <span>Documentation</span></Link></li>
                         </ul>
                         <ul className="sidebar-menu" id="bars">
                             <li><Link to="/"><i className="fa fa-link"></i> <span>Main Website</span></Link></li>
