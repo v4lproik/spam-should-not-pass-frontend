@@ -13,6 +13,7 @@ function getEntrySources() {
 
     if (process.env.NODE_ENV !== 'production') {
         sources.push('webpack/hot/dev-server');
+        sources.push('webpack-dev-server/client?http://localhost:3000');
     }
     sources.push(path.resolve(__dirname, 'app/index.js'));
 
