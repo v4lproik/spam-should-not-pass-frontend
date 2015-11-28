@@ -24,7 +24,8 @@ config = {
     entry: getEntrySources(),
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: "bundle.js"
+        filename: "bundle.js",
+        publicPath: "/"
     },
     module: {
         loaders: [{
@@ -64,9 +65,6 @@ config = {
     },
     resolveLoader: {
         root: path.join(__dirname, "node_modules")
-    },
-    devServer: {
-        historyApiFallback: true
     }
 };
 
