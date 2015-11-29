@@ -14,7 +14,7 @@ var RuleDetail = React.createClass({
     getInitialState: function() {
         return {
             username: '',
-            rule: {},
+            context: {},
             type: [{show: 'Document', value: 'SPAM'}, {show: 'User', value: 'SPAMMER'}],
             success: ''
         };
@@ -62,7 +62,6 @@ var RuleDetail = React.createClass({
         return (
             <div className="row">
                 <div className="col-xs-12">
-
                     <div className="box box-primary">
                         <div className="box-header with-border">
                             <h3 className="box-title">Rule details</h3>

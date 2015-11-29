@@ -5,12 +5,16 @@ import Admin from './components/Admin/admin.js';
 import RuleDetails from './components/Admin/Rule/details.js';
 import RuleAdd from './components/Admin/Rule/add.js';
 import RuleIndex from './components/Admin/Rule/index.js';
+import ContextIndex from './components/Admin/Context/index.js';
 import SettingsIndex from './components/Admin/Settings/index.js';
 import ApiIndex from './components/Admin/Api/index.js';
 import DocIndex from './components/Admin/Documentation/index.js';
 import FaqIndex from './components/Admin/Faq/index.js';
 import ProfileIndex from './components/Admin/Profile/index.js';
 import RuleList from './components/Admin/Rule/list.js';
+import ContextList from './components/Admin/Context/list.js';
+import ContextDetails from './components/Admin/Context/details.js';
+import ContextAdd from './components/Admin/Context/add.js';
 import Scheme from './components/Admin/Scheme/scheme.js';
 import Dashboard from './components/Admin/Dashboard/dashboard.js';
 import Navbar from './components/Vitrine/Navbar/container.js';
@@ -92,6 +96,12 @@ ReactDOM.render(
                 <Route path="list" component={RuleList} onEnter={requireAuth}/>
                 <Route path="detail/:ruleID" component={RuleDetails} onEnter={requireAuth}/>
                 <Route path="add" component={RuleAdd} onEnter={requireAuth}/>
+            </Route>
+            <Route path="context" component={ContextIndex}>
+                <IndexRoute component={ContextList} onEnter={requireAuth}/>
+                <Route path="list" component={ContextList} onEnter={requireAuth}/>
+                <Route path="detail/:contextId" component={ContextDetails} onEnter={requireAuth}/>
+                <Route path="add" component={ContextAdd} onEnter={requireAuth}/>
             </Route>
         </Route>
         <Route path="/logout" component={SignOut} onEnter={killSession}/>

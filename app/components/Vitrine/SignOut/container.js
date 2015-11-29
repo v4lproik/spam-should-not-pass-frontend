@@ -15,7 +15,7 @@ require('../../../public/css/error.css');
 var SignOut = React.createClass({
 
     componentDidMount: function() {
-        this.interval = setInterval(() => this.props.history.replaceState(null, '/'), 1000);
+        this.interval = setInterval(() => this.props.history.replaceState(null, '/'), 3000);
     },
 
     componentWillUnmount: function() {
@@ -30,7 +30,7 @@ var SignOut = React.createClass({
                         <section className="error-message-redirection">
                             <h1 className="error-code-redirection"></h1>
                             <h2 className="error-description-redirection">You have been logged out</h2>
-                            <Link to="/" className="error-link-redirection" >Redirection in 5 seconds or click here →</Link>
+                            <Link to="/" className="error-link-redirection" >Redirection in 3 seconds or click here →</Link>
                         </section>
                     </section>
                 </section>

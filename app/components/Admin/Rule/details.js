@@ -13,11 +13,11 @@ var RuleDetail = React.createClass({
 
     getInitialState: function() {
         return {
-            username: '',
             action: '',
             rule: {},
-            type: [{show: 'Document', value: 'SPAM'}, {show: 'User', value: 'SPAMMER'}],
-            success: ''
+            ruleName: '',
+            ruleRule: '',
+            type: [{show: 'Document', value: 'SPAM'}, {show: 'User', value: 'SPAMMER'}]
         };
     },
 
@@ -27,7 +27,9 @@ var RuleDetail = React.createClass({
         RuleService.get(this.props.params.ruleID, user.token)
             .then(function(rule){
                 this.setState({
-                    rule: rule
+                    rule: rule,
+                    ruleName: rule.name,
+                    ruleRule: rule.rule
                 });
             }.bind(this))
             .catch(function(err){
@@ -60,8 +62,8 @@ var RuleDetail = React.createClass({
         }
 
         var type = this.refs.type.value.trim();
-        var name = this.refs.name.value.trim();
-        var rule = this.refs.rule.value.trim();
+        var name = this.refs.ruleName.value.trim();
+        var rule = this.refs.ruleRule.value.trim();
         if (!type || !name || !rule) {
             return;
         }
@@ -78,7 +80,7 @@ var RuleDetail = React.createClass({
 
         RuleService.add(newArray, user.token)
             .then(function(){
-
+                notificationSuccess(null, 'The rule has been updated !');
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
@@ -91,7 +93,19 @@ var RuleDetail = React.createClass({
         this.setState({action : action});
     },
 
+    handleChangeName: function(e){
+        this.setState({ruleName : e.target.value});
+    },
+
+    handleChangeRule: function(e){
+        this.setState({ruleRule : e.target.value});
+    },
+
     render: function() {
+
+        var name = this.state.ruleName;
+        var rule = this.state.ruleRule;
+
         return (
             <div className="row">
                 <div className="col-xs-12">
@@ -103,7 +117,7 @@ var RuleDetail = React.createClass({
                             <div className="box-body">
                                 <div className="form-group">
                                     <label>Name</label>
-                                    <input type="text" className="form-control" placeholder="Enter a name..." ref="name" value={this.state.rule.name}/>
+                                    <input type="text" className="form-control" placeholder="Enter a name..." ref="ruleName" value={name} onChange={this.handleChangeName}/>
                                 </div>
                                 <div className="form-group">
                                     <label>Type</label>
@@ -118,7 +132,8 @@ var RuleDetail = React.createClass({
                                     </select>
                                 </div>
                                 <div className="form-group">
-                                    <pre className="prettyprint" ref="rule">{this.state.rule.rule}</pre>
+                                    <label>Textarea</label>
+                                    <textarea className="form-control" value={rule} ref="ruleRule" onChange={this.handleChangeRule}></textarea>
                                 </div>
                             </div>
                             <div className="box-footer">

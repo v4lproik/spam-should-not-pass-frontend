@@ -56,7 +56,6 @@ var RuleList = React.createClass({
                         </div>
                         <div className="box-body">
                             <form role="form" onSubmit={this.handleSubmitx}>
-
                                 <table id="example2" className="table table-bordered table-hover">
                                     <thead>
                                     <tr>
@@ -86,12 +85,11 @@ var RuleList = React.createClass({
                         </div>
                         <div className="box-body">
                             <form role="form" onSubmit={this.handleSubmitx}>
-
                                 <table id="example2" className="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>Type</th>
                                         <th>Name</th>
+                                        <th>Description</th>
                                     </tr>
                                     </thead>
                                     <tbody>

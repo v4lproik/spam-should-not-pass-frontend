@@ -67,7 +67,7 @@ var Admin = React.createClass({
                             <li className={this.getCSSClass('scheme')}><Link to="/admin/scheme"><i className="fa fa-link"></i> <span>Scheme</span></Link></li>
                             <li className={this.getCSSClass('rule')}><Link to="/admin/rule/list"><i className="fa fa-link"></i> <span>Rule</span></Link></li>
                             <li className={this.getCSSClass('context')}><Link to="/admin/context/list"><i className="fa fa-link"></i> <span>Context</span></Link></li>
-                            <li className={this.getCSSClass('api')}><Link to="/admin/scheme"><i className="fa fa-link"></i> <span>API</span></Link></li>
+                            <li className={this.getCSSClass('api')}><Link to="/admin/api"><i className="fa fa-link"></i> <span>API</span></Link></li>
                             <li className="header">USER</li>
                             <li className={this.getCSSClass('profile')}><Link to="/admin/profile"><i className="fa fa-link"></i> <span>Profile</span></Link></li>
                             <li className={this.getCSSClass('settings')}><Link to="/admin/settings"><i className="fa fa-link"></i> <span>Settings</span></Link></li>
