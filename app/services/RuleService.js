@@ -4,11 +4,12 @@ import Client from '../client/Platform';
 class RuleService {
 
     constructor(){
+        this.base = '/rule';
     }
 
     list(token) {
 
-        var url = "/rule/list";
+        var url = this.base + "/list";
 
         return Client.postSync(url, {}, token).then(function(data){
 
@@ -25,18 +26,18 @@ class RuleService {
 
     add(rule, token) {
 
-        var url = "/rule/create";
+        var url = this.base + "/create";
         var data = {"name": rule.name, "type": rule.type, "rule": rule.rule};
 
         return Client.postSync(url, data, token)
             .catch(function(err){
-            throw err;
-        });
+                throw err;
+            });
     }
 
     get(ruleID, token) {
 
-        var url = "/rule/get";
+        var url = this.base + "/get";
         var data = {"id": ruleID};
 
         return Client.postSync(url, data, token)
@@ -55,7 +56,7 @@ class RuleService {
 
     delete(ruleID, token) {
 
-        var url = "/rule/delete";
+        var url = this.base + "/delete";
         var data = {"id": ruleID};
 
         return Client.postSync(url, data, token)

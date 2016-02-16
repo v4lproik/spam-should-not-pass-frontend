@@ -17,7 +17,7 @@ var RuleDetail = React.createClass({
             rule: {},
             ruleName: '',
             ruleRule: '',
-            type: [{show: 'Document', value: 'SPAM'}, {show: 'User', value: 'SPAMMER'}]
+            type: [{show: 'Document', value: 'DOCUMENT'}, {show: 'User', value: 'USER'}]
         };
     },
 

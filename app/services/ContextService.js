@@ -4,11 +4,12 @@ import Client from '../client/Platform';
 class ContextService {
 
     constructor(){
+        this.base = '/context';
     }
 
     list(token) {
 
-        var url = "/context/list";
+        var url = this.base + "/list";
 
         return Client.postSync(url, {}, token).then(function(data){
 
@@ -25,7 +26,7 @@ class ContextService {
 
     add(name, token) {
 
-        var url = "/context/create";
+        var url = this.base + "/create";
         var data = {"name": name};
 
         return Client.postSync(url, data, token)
@@ -44,7 +45,7 @@ class ContextService {
 
     addRules(contextId, rules, token) {
 
-        var url = "/context/add-rules";
+        var url = this.base + "/add-rules";
         var data = {idContext: contextId, listRules: rules};
 
         return Client.postSync(url, data, token)
@@ -55,7 +56,7 @@ class ContextService {
 
     getContextAndRules(contextId, token) {
 
-        var url = "/context/get-and-rules";
+        var url = this.base + "/get-and-rules";
         var data = {id: contextId};
 
         return Client.postSync(url, data, token)
@@ -72,9 +73,24 @@ class ContextService {
             });
     }
 
+    update(context, token) {
+
+        var url = this.base + "/update-and-rules";
+        var rulesId = context.rules.map(function(x){
+            return x.id;
+        });
+
+        var data = {id: context.id, name: context.name, rulesId: rulesId};
+
+        return Client.postSync(url, data, token)
+            .catch(function(err){
+                throw err;
+            });
+    }
+
     get(contextId, token) {
 
-        var url = "/context/get";
+        var url = this.base + "/get";
         var data = {"id": contextId};
 
         return Client.postSync(url, data, token)
@@ -93,7 +109,7 @@ class ContextService {
 
     delete(contextId, token) {
 
-        var url = "/context/delete";
+        var url = this.base + "/delete";
         var data = {"id": contextId};
 
         return Client.postSync(url, data, token)

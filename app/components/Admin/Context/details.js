@@ -15,33 +15,63 @@ var RuleDetail = React.createClass({
     getInitialState: function() {
         return {
             rules: [],
-            context: {},
-            rulesSelected: []
+            rulesAc: [],
+            rulesAv: [],
+            context: {}
         };
     },
 
-    componentDidMount: function() {
+    componentWillMount: function() {
         var user = LoginStore.getUser();
         var contextId = this.props.params.contextId;
 
         ContextService.getContextAndRules(contextId, user.token)
-            .then(function(data){
-                console.log(data);
-                this.setState({
-                    context: data,
-                    rules: data.rules
-                });
+            .then(function(dataContext){
+
+                RuleService.list(user.token)
+                    .then(function(dataRules){
+
+                        var rulesAc = dataContext.rules;
+                        var rules = dataRules;
+                        var rulesAv = [];
+
+                        for (var i = 0; i < rules.length; i++){
+                            var flag = false;
+                            for (var y = 0; y < rulesAc.length; y++) {
+                                if (rules[i].id == rulesAc[y].id){
+                                    flag = true;
+                                }
+                            }
+                            if (!flag){
+                                rulesAv.push(rules[i]);
+                            }
+                        }
+
+                        this.setState({
+                            context: dataContext,
+                            rules: rules,
+                            rulesAc: rulesAc,
+                            rulesAv: rulesAv
+                        });
+
+                    }.bind(this))
+                    .catch(function(err){
+                        if(err instanceof PlatformException.constructor){
+                            redirectionError(this.props.history, err.code);
+                        }
+                    }.bind(this));
+
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
                     redirectionError(this.props.history, err.code);
                 }
             }.bind(this));
+
     },
 
     handleSubmitx: function(e) {
         e.preventDefault();
-        var user = LoginStore.getUser();
 
         if(this.state.action === 'delete'){
             ContextService.delete(this.state.context.id, user.token)
@@ -58,26 +88,27 @@ var RuleDetail = React.createClass({
             return;
         }
 
-        var type = this.refs.type.value.trim();
-        var name = this.refs.name.value.trim();
-        var rule = this.refs.context.value.trim();
-        if (!type || !name || !rule) {
+
+        var context = this.state.context;
+        var rulesAc = this.state.rulesAc;
+
+        if (!context.name) {
             return;
         }
 
+        var user = LoginStore.getUser();
 
         if (typeof user === 'undefined') {
             redirectionUnauthorised(this.props.history);
         }
 
-        var newArray = {};
-        newArray.type = type;
-        newArray.context = rule;
-        newArray.name = name;
-
-        RuleService.add(newArray, user.token)
+        context.rules = rulesAc;
+        ContextService.update(context, user.token)
             .then(function(){
-
+                notificationSuccess(null, 'The context has been updated !');
+                this.setState({
+                    context: context
+                });
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
@@ -90,14 +121,41 @@ var RuleDetail = React.createClass({
         this.setState({action : action});
     },
 
-    handleChange: function(idRule) {
-        var index = this.state.rulesSelected.indexOf(idRule);
+    handleChange: function(idRule, action) {
+        var rule;
+        var rulesAv;
+        var rulesAc;
 
-        index > -1 ? this.state.rulesSelected.splice(index, 1) : this.state.rulesSelected.push(idRule);
+        if (action == 'toAct'){
+            rule = this.state.rulesAv.filter((x) => {
+                return x.id == idRule
+            })[0];
+            this.state.rulesAc.push(rule);
+
+            rulesAv = this.state.rulesAv.filter((x) => {
+                return x.id != idRule
+            });
+        }else{
+            rule = this.state.rulesAc.filter((x) => {
+                return x.id == idRule
+            })[0];
+            this.state.rulesAc.push(rule);
+
+            rulesAv = this.state.rulesAv.filter((x) => {
+                return x.id != idRule
+            });
+        }
+
+        this.setState({
+            rulesAc: this.state.rulesAc,
+            rulesAv: rulesAv
+        });
     },
 
     render: function() {
 
+        var rulesAv = this.state.rulesAv;
+        var rulesAc = this.state.rulesAc;
         var rules = this.state.rules;
         var context = this.state.context;
 
@@ -122,23 +180,24 @@ var RuleDetail = React.createClass({
                     <div className="col-xs-6">
                         <div className="box box-primary">
                             <div className="box-header">
-                                <h3 className="box-title">User Rules</h3>
+                                <h3 className="box-title">Available Rules</h3>
                             </div>
                             <div className="box-body">
                                 <table id="example2" className="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th style={{width: '10px'}}>#</th>
                                         <th>Name</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {rules.map(function(value){
-                                        if(value.type === 'SPAMMER'){
-                                            return(
-                                                <tr><td><input type="checkbox" className="minimal" onChange={this.handleChange.bind(this, value.id)}/></td><td>{value.rule}</td></tr>
-                                            )
-                                        }
+                                    {rulesAv.map(function(value){
+                                        return(
+                                            <tr>
+                                                <td>{value.rule}</td>
+                                                <td><a class="pull-right" onClick={this.handleChange.bind(this, value.id, 'toAct')}>&gt;&gt;</a></td>
+                                            </tr>
+                                        )
                                     }.bind(this))}
                                     </tbody>
                                 </table>
@@ -148,23 +207,24 @@ var RuleDetail = React.createClass({
                     <div className="col-xs-6">
                         <div className="box box-primary">
                             <div className="box-header">
-                                <h3 className="box-title">Document Rules</h3>
+                                <h3 className="box-title">Activated Rules</h3>
                             </div>
                             <div className="box-body">
                                 <table id="example2" className="table table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th style={{width: '10px'}}>#</th>
+                                        <th></th>
                                         <th>Name</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {rules.map(function(value){
-                                        if(value.type === 'SPAM'){
-                                            return(
-                                                <tr><td><input type="checkbox" className="minimal" onChange={this.handleChange.bind(this, value.id)}/></td><td>{value.rule}</td></tr>
-                                            )
-                                        }
+                                    {rulesAc.map(function(value){
+                                        return(
+                                            <tr>
+                                                <td><a class="pull-right" onClick={this.handleChange.bind(this, value.id, 'toAv')}>&lt;&lt;</a></td>
+                                                <td><span class="pull-right">{value.rule}</span></td>
+                                            </tr>
+                                        )
                                     }.bind(this))}
                                     </tbody>
                                 </table>
@@ -173,7 +233,7 @@ var RuleDetail = React.createClass({
                     </div>
                 </div>
                 <div className="box-footer">
-                    <input type="submit" value="Modify" className="btn btn-primary" ref="Modify" onClick={this.setAction.bind(this, 'modify')}/>&nbsp;&nbsp;
+                    <input type="submit" value="Save" className="btn btn-primary" ref="Modify" onClick={this.setAction.bind(this, 'modify')}/>&nbsp;&nbsp;
                     <input type="submit" value="Delete" className="btn btn-primary" ref="Delete" onClick={this.setAction.bind(this, 'delete')}/>
                     <Link to="/admin/context/list" type="submit" className="btn btn-danger pull-right">Cancel</Link>
                 </div>

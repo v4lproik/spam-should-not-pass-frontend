@@ -6,11 +6,13 @@ class MemberInformationService {
     constructor(){
         this.defaultPermission = "REGULAR";
         this.defaultStatus     = "USER";
+
+        this.base = '/user';
     }
 
     info(token) {
 
-        var url = "/user/info";
+        var url = this.base + "/info";
 
         return Client.postSync(url, {}, token).then(function(data){
 
@@ -29,7 +31,7 @@ class MemberInformationService {
 
     create(firstname, lastname, email, corporation, password) {
 
-        var url = "/user/create";
+        var url = this.base + "/create";
         var data = {"firstname": firstname, "lastname": lastname, "email": email, "password": password, "corporation": corporation, "permission": this.defaultPermission, "status": this.defaultStatus};
 
         return Client.postSync(url, data, null)

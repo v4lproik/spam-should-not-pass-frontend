@@ -15,13 +15,9 @@ var RuleDetail = React.createClass({
         return {
             username: '',
             context: {},
-            type: [{show: 'Document', value: 'SPAM'}, {show: 'User', value: 'SPAMMER'}],
+            type: [{show: 'Document', value: 'DOCUMENT'}, {show: 'User', value: 'USER'}],
             success: ''
         };
-    },
-
-    componentWillMount: function() {
-        console.log("call from /rule_add");
     },
 
     handleSubmitx: function(e) {
@@ -53,7 +49,7 @@ var RuleDetail = React.createClass({
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
                     redirectionError(this.props.history, err.code);
-                    notificationAlert('Error', err.message);
+                    notificationAlert('Error', err);
                 }
             }.bind(this));
     },

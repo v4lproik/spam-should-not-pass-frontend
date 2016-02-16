@@ -4,17 +4,21 @@ import PlatformException from '../models/PlatformException.js';
 
 class AuthService {
 
+    constructor(){
+        this.base = '/user';
+    }
+
     login(username, password) {
 
+        var url = this.base + "/auth";
+
         var data = {"email": username, "password": password};
-        var url = "/user/auth";
         var token = null;
 
         return Client.postSync(url, data, token)
             .then(function(data){
 
                 if (typeof data.user !== undefined) {
-                    console.log("Know user");
                     var user = data.user;
                     user.token = {};
                     user.token = data.token;
@@ -24,7 +28,6 @@ class AuthService {
                     return user;
                 }
 
-                console.log("Don't know user");
                 return null;
             })
             .catch(function(err){
@@ -35,8 +38,8 @@ class AuthService {
 
     logout(token) {
 
+        var url = this.base + "/logout";
         var data = null;
-        var url = "/user/logout";
 
         return Client.postSync(url, data, token)
             .catch(function(err){
@@ -44,8 +47,6 @@ class AuthService {
                 throw err;
             });
     }
-
-
 }
 
 export default new AuthService()

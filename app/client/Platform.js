@@ -31,7 +31,6 @@ class Platform{
                 });
 
                 promise.done(function (results) {
-                    // do some more processing and update results
                     if(results.status !== 'OK'){
                         console.error(results);
                         reject(new PlatformException.constructor(results.status, results.status, results.error, results.message));

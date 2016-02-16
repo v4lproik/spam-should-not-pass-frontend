@@ -7,6 +7,7 @@ import MemberInfoService from '../../../services/MemberService.js';
 import SchemeService from '../../../services/SchemeService.js';
 import SessionService from '../../../services/SessionService.js';
 import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../Utility/redirection.js';
+import ArrayUtility from '../../Utility/array.js';
 
 var Scheme = React.createClass({
 
@@ -15,6 +16,8 @@ var Scheme = React.createClass({
             username: '',
             spamScheme: [],
             spammerScheme: [],
+            spamSchemeToDisplay: [],
+            spammerSchemeToDisplay: [],
             variableType: ["java.lang.String", "java.lang.Integer", "java.lang.Boolean"]
         };
     },
@@ -22,39 +25,25 @@ var Scheme = React.createClass({
     componentWillMount: function() {
         var user = LoginStore.getUser();
 
-        console.log("call from /scheme");
+        SchemeService.getUser(user.id, user.token)
+            .then(function(schemeSpammer){
+                this.setState({
+                    spammerScheme: schemeSpammer,
+                    spammerSchemeToDisplay: ArrayUtility.sortByKey(schemeSpammer.properties, 'position')
+                });
+            }.bind(this))
+            .catch(function(err){
+                if(err instanceof PlatformException.constructor){
+                    redirectionError(this.props.history, err.code);
+                }
+            }.bind(this));
 
-        MemberInfoService.info(user.token)
-            .then(function(data){
-                LoginStore.setUser(data);
-
-                SchemeService.schemeSpammer(user.id, user.token)
-                    .then(function(schemeSpammer){
-
-                        SchemeService.schemeSpam(user.id, user.token)
-                            .then(function(schemeSpam){
-                                this.setState({
-                                    username: data.nickName,
-                                    spammerScheme: schemeSpammer,
-                                    spamScheme: schemeSpam
-                                });
-
-                            }.bind(this))
-                            .catch(function(err){
-                                if(err instanceof PlatformException.constructor){
-                                    redirectionError(this.props.history, err.code);
-                                }
-                            }.bind(this));
-
-                        return scheme;
-                    }.bind(this))
-                    .catch(function(err){
-                        if(err instanceof PlatformException.constructor){
-                            redirectionError(this.props.history, err.code);
-                        }
-                    }.bind(this));
-
-
+        SchemeService.getDocument(user.id, user.token)
+            .then(function(schemeSpam){
+                this.setState({
+                    spamScheme: schemeSpam,
+                    spamSchemeToDisplay: ArrayUtility.sortByKey(schemeSpam.properties, 'position')
+                });
             }.bind(this))
             .catch(function(err){
                 if(err instanceof PlatformException.constructor){
@@ -72,13 +61,15 @@ var Scheme = React.createClass({
             return;
         }
 
-
         var properties = [];
-        properties = $.parseJSON(this.state.spamScheme.properties);
+        properties = this.state.spamScheme.properties;
 
         var newArray = {};
         newArray.variableType = variableType;
         newArray.variableName = variableName;
+        newArray.locked = true;
+        newArray.provided = false;
+        newArray.position = properties.length + 1;
 
         properties.push(newArray);
 
@@ -88,24 +79,11 @@ var Scheme = React.createClass({
             redirectionUnauthorised(this.props.history);
         }
 
-        SchemeService.addSchemeSpam(properties, user.token);
-
-        SchemeService.schemeSpammer(user.id, user.token)
-            .then(function(schemeSpammer){
-
-                SchemeService.schemeSpam(user.id, user.token)
-                    .then(function(schemeSpam){
-                        this.setState({
-                            spammerScheme: schemeSpammer,
-                            spamScheme: schemeSpam
-                        });
-
-                    }.bind(this))
-                    .catch(function(err){
-                        if(err instanceof PlatformException.constructor){
-                            redirectionError(this.props.history, err.code);
-                        }
-                    }.bind(this));
+        SchemeService.addDocument(properties, user.token)
+            .then(function(){
+                this.setState({
+                    spamSchemeToDisplay: properties
+                });
 
             }.bind(this))
             .catch(function(err){
@@ -125,11 +103,14 @@ var Scheme = React.createClass({
         }
 
         var properties = [];
-        properties = $.parseJSON(this.state.spammerScheme.properties);
+        properties = this.state.spammerScheme.properties;
 
         var newArray = {};
         newArray.variableType = variableType;
         newArray.variableName = variableName;
+        newArray.locked = true;
+        newArray.provided = false;
+        newArray.position = properties.length + 1;
 
         properties.push(newArray);
 
@@ -139,25 +120,11 @@ var Scheme = React.createClass({
             redirectionUnauthorised(this.props.history);
         }
 
-        SchemeService.addSchemeSpammer(properties, user.token);
-
-
-        SchemeService.schemeSpammer(user.id, user.token)
-            .then(function(schemeSpammer){
-
-                SchemeService.schemeSpam(user.id, user.token)
-                    .then(function(schemeSpam){
-                        this.setState({
-                            spammerScheme: schemeSpammer,
-                            spamScheme: schemeSpam
-                        });
-
-                    }.bind(this))
-                    .catch(function(err){
-                        if(err instanceof PlatformException.constructor){
-                            redirectionError(this.props.history, err.code);
-                        }
-                    }.bind(this));
+        SchemeService.addUser(properties, user.token)
+            .then(function(){
+                this.setState({
+                    spammerSchemeToDisplay: properties
+                });
 
             }.bind(this))
             .catch(function(err){
@@ -169,15 +136,8 @@ var Scheme = React.createClass({
 
     render: function() {
 
-        var schemeSpammer = [];
-        var schemeSpam = [];
-        var tableRowSpammer = this.state.spammerScheme.properties;
-        var tableRowSpam = this.state.spamScheme.properties;
-
-        if (typeof tableRowSpam !== 'undefined' && typeof tableRowSpammer !== 'undefined') {
-            schemeSpammer = JSON.parse(tableRowSpammer);
-            schemeSpam = JSON.parse(tableRowSpam);
-        }
+        var schemeSpammer = this.state.spammerSchemeToDisplay;
+        var schemeSpam = this.state.spamSchemeToDisplay;
 
         return (
             <div>

@@ -13,7 +13,6 @@ var RuleList = React.createClass({
 
     getInitialState: function() {
         return {
-            username: '',
             rules: []
         };
     },
@@ -26,7 +25,6 @@ var RuleList = React.createClass({
         RuleService.list(user.token)
             .then(function(data){
                 this.setState({
-                    username: user.nickName,
                     rules: data
                 });
             }.bind(this))
@@ -48,7 +46,7 @@ var RuleList = React.createClass({
 
         return (
             <div className="row">
-                <div className="col-xs-6">
+                <div className="col-xs-12">
                     <div className="box box-primary">
                         <div className="box-header">
                             <h3 className="box-title">User Rules</h3>
@@ -65,40 +63,9 @@ var RuleList = React.createClass({
                                     </thead>
                                     <tbody>
                                     {rules.map(function(value){
-                                        if(value.type === 'SPAMMER'){
-                                            return(
-                                                <tr onClick={this.handleClick.bind(this, value.id)}><td>{value.name}</td><td>{value.rule}</td></tr>
-                                            )
-                                        }
-                                    }.bind(this))}
-                                    </tbody>
-                                </table>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-xs-6">
-                    <div className="box box-primary">
-                        <div className="box-header">
-                            <h3 className="box-title">Document Rules</h3>
-                            <Link to="/admin/rule/add" type="submit" className="btn btn-primary btn-sm place-right">+</Link>
-                        </div>
-                        <div className="box-body">
-                            <form role="form" onSubmit={this.handleSubmitx}>
-                                <table id="example2" className="table table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {rules.map(function(value){
-                                        if(value.type === 'SPAM'){
-                                            return(
-                                                <tr onClick={this.handleClick.bind(this, value.id)}><td>{value.name}</td><td>{value.rule}</td></tr>
-                                            )
-                                        }
+                                        return(
+                                            <tr onClick={this.handleClick.bind(this, value.id)}><td>{value.name}</td><td>{value.rule}</td></tr>
+                                        )
                                     }.bind(this))}
                                     </tbody>
                                 </table>
