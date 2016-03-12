@@ -35,6 +35,17 @@ class RuleService {
             });
     }
 
+    update(rule, token) {
+
+        var url = this.base + "/update";
+        var data = {id: rule.id, name: rule.name, type: rule.type, rule: rule.rule};
+
+        return Client.postSync(url, data, token)
+            .catch(function(err){
+                throw err;
+            });
+    }
+
     get(ruleID, token) {
 
         var url = this.base + "/get";

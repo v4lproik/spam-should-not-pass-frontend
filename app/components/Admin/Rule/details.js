@@ -74,11 +74,12 @@ var RuleDetail = React.createClass({
         }
 
         var newArray = {};
+        newArray.id = this.props.params.ruleID;
         newArray.type = type;
         newArray.rule = rule;
         newArray.name = name;
 
-        RuleService.add(newArray, user.token)
+        RuleService.update(newArray, user.token)
             .then(function(){
                 notificationSuccess(null, 'The rule has been updated !');
             }.bind(this))
