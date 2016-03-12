@@ -18,7 +18,7 @@ var Scheme = React.createClass({
             spammerScheme: [],
             spamSchemeToDisplay: [],
             spammerSchemeToDisplay: [],
-            variableType: ["java.lang.String", "java.lang.Integer", "java.lang.Boolean"]
+            variableType: ["String", "Integer", "Boolean"]
         };
     },
 
@@ -65,7 +65,7 @@ var Scheme = React.createClass({
         properties = this.state.spamScheme.properties;
 
         var newArray = {};
-        newArray.variableType = variableType;
+        newArray.variableType = "java.lang." + variableType;
         newArray.variableName = variableName;
         newArray.locked = true;
         newArray.provided = false;
@@ -106,7 +106,7 @@ var Scheme = React.createClass({
         properties = this.state.spammerScheme.properties;
 
         var newArray = {};
-        newArray.variableType = variableType;
+        newArray.variableType = "java.lang." + variableType;
         newArray.variableName = variableName;
         newArray.locked = true;
         newArray.provided = false;
@@ -166,7 +166,7 @@ var Scheme = React.createClass({
                                             </thead>
                                             <tbody>
                                             {schemeSpammer.map(function(value){
-                                                return (<tr><td>{value.variableType}</td><td>{value.variableName}</td></tr>);
+                                                return (<tr><td>{value.variableType.split(".").pop()}</td><td>{value.variableName}</td></tr>);
                                             })}
                                             <tr>
 
@@ -209,7 +209,7 @@ var Scheme = React.createClass({
                                             </thead>
                                             <tbody>
                                             {schemeSpam.map(function(value){
-                                                return (<tr><td>{value.variableType}</td><td>{value.variableName}</td></tr>);
+                                                return (<tr><td>{value.variableType.split(".").pop()}</td><td>{value.variableName}</td></tr>);
                                             })}
                                             <tr>
                                                 <td>
