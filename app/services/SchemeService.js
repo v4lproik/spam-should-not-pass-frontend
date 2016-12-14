@@ -1,18 +1,19 @@
-import LoginStore from '../stores/LoginStore';
 import Client from '../client/Platform';
 
 class SchemeService {
 
-    constructor(){
+    constructor() {
         this.base = '/scheme';
     }
 
     getDocument(userId, token) {
 
         var url = this.base + "/get/document";
-        var data ={'id': userId};
+        var data = {
+            'id': userId
+        };
 
-        return Client.postSync(url, data, token).then(function(data){
+        return Client.postSync(url, data, token).then(function(data) {
             console.log("info for spammer scheme");
             console.log(data);
 
@@ -22,7 +23,7 @@ class SchemeService {
             }
 
             return null;
-        }).catch(function(err){
+        }).catch(function(err) {
             throw err;
         });
     }
@@ -30,9 +31,11 @@ class SchemeService {
     getUser(userId, token) {
 
         var url = this.base + "/get/user";
-        var data ={'id': userId};
+        var data = {
+            'id': userId
+        };
 
-        return Client.postSync(url, data, token).then(function(data){
+        return Client.postSync(url, data, token).then(function(data) {
             console.log("info for spammer scheme");
             console.log(data);
 
@@ -42,7 +45,7 @@ class SchemeService {
             }
 
             return null;
-        }).catch(function(err){
+        }).catch(function(err) {
             throw err;
         });
     }
@@ -50,10 +53,11 @@ class SchemeService {
     addUser(scheme, token) {
 
         var url = this.base + "/create/user";
-        var data ={'properties': scheme};
+        var data = {
+            'properties': scheme
+        };
 
-        return Client.postSync(url, data, token)
-            .catch(function(err){
+        return Client.postSync(url, data, token).catch(function(err) {
             throw err;
         });
     }
@@ -61,12 +65,13 @@ class SchemeService {
     addDocument(scheme, token) {
 
         var url = this.base + "/create/document";
-        var data ={'properties': scheme};
+        var data = {
+            'properties': scheme
+        };
 
-        return Client.postSync(url, data, token)
-            .catch(function(err){
-                throw err;
-            });
+        return Client.postSync(url, data, token).catch(function(err) {
+            throw err;
+        });
     }
 }
 

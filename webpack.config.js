@@ -1,5 +1,5 @@
 var path = require('path');
-var webpack = require("webpack");
+var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var node_modules = path.resolve(__dirname, 'node_modules');
@@ -28,30 +28,46 @@ config = {
         publicPath: "/"
     },
     module: {
-        loaders: [{
-            test: /\.js?$/,
-            loader: 'babel',
-            query:
+        loaders: [
             {
-                presets:['es2015','react']
+                test: /\.js?$/,
+                loader: 'babel',
+                query: {
+                    presets: ['es2015', 'react']
+                }
+            }, {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                query: {
+                  presets: ['react']
+                }
+            }, {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'eslint-loader'
+            }, {
+                test: /\.css$/,
+                loader: ExtractTextPlugin.extract('style-loader', 'css-loader')
+            }, {
+                test: /\.(png|jpg)$/,
+                loader: 'file-loader?name=img/[name].[ext]'
+            }, {
+                test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "url-loader?limit=10000&mimetype=application/font-woff&name=[name].[ext]"
+            }, {
+                test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+                loader: "file-loader?name=[name].[ext]"
             }
-        },
-            { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
-            { test: /\.(png|jpg)$/, loader: 'file-loader?name=img/[name].[ext]' },
-            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff&name=[name].[ext]" },
-            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader?name=[name].[ext]" }
         ],
         noParse: [pathToReact]
     },
+    eslint: {
+        configFile: './.eslintrc'
+    },
     plugins: [
-        new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery"
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'index.html',
-            template: 'app/public/index.html'
-        }),
+        new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),
+        new HtmlWebpackPlugin({filename: 'index.html', template: 'app/public/index.html'}),
         new ExtractTextPlugin('app.css')
     ],
     resolve: {

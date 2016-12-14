@@ -1,13 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, IndexLink } from 'react-router';
-import Navbar from '../Navbar/container.js';
-import AuthService from '../../../services/AuthService.js';
-import LoginStore from '../../../stores/LoginStore.js';
-import MemberInfoService from '../../../services/MemberService.js';
-import SessionService from '../../../services/SessionService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised, redirectionAdmin} from '../../Utility/redirection.js';
-
+import {Link} from 'react-router';
 
 //css
 require('../../../public/css/error.css');
@@ -30,7 +22,7 @@ var SignOut = React.createClass({
                         <section className="error-message-redirection">
                             <h1 className="error-code-redirection"></h1>
                             <h2 className="error-description-redirection">You have been logged out</h2>
-                            <Link to="/" className="error-link-redirection" >Redirection in 3 seconds or click here →</Link>
+                            <Link to="/" className="error-link-redirection">Redirection in 3 seconds or click here →</Link>
                         </section>
                     </section>
                 </section>

@@ -1,15 +1,17 @@
 class LoginStore {
 
     constructor() {
-        this.userKey     = "user";
+        this.userKey = "user";
 
-        var supported = this.localStorageSupported();
-        this.storage = supported ? window.localStorage : getFakeStorage;
+        let supported = this.localStorageSupported();
+        this.storage = supported
+            ? window.localStorage
+            : this.getFakeStorage;
     }
 
     localStorageSupported() {
-        var testKey = "test";
-        var storage = window.localStorage;
+        let testKey = "test";
+        let storage = window.localStorage;
 
         try {
             storage.setItem(testKey, "1");
@@ -21,7 +23,7 @@ class LoginStore {
     }
 
     getFakeStorage() {
-        return fakeStorage = {
+        let fakeStorage = {
             _data: {},
 
             setItem(id, val) {
@@ -29,7 +31,9 @@ class LoginStore {
             },
 
             getItem(id) {
-                return this._data.hasOwnProperty(id) ? this._data[id] : undefined;
+                return this._data.hasOwnProperty(id)
+                    ? this._data[id]
+                    : undefined;
             },
 
             removeItem(id) {
@@ -40,11 +44,14 @@ class LoginStore {
                 return this._data = {};
             }
         };
+        return fakeStorage;
     }
 
     getUser() {
-        var stateJSON = this.storage.getItem(this.userKey);
-        return stateJSON ? JSON.parse(stateJSON) : null;
+        let stateJSON = this.storage.getItem(this.userKey);
+        return stateJSON
+            ? JSON.parse(stateJSON)
+            : null;
     }
 
     setUser(user) {

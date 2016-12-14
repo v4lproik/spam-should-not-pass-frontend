@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, IndexLink } from 'react-router';
+import {Link} from 'react-router';
 
 var Unavailable = React.createClass({
     render: function() {
@@ -11,7 +10,7 @@ var Unavailable = React.createClass({
                         <section className="error-message-redirection">
                             <h1 className="error-code-redirection">KO</h1>
                             <h2 className="error-description-redirection">Unavailable! Please come back later.</h2>
-                            <Link to="/signin" className="error-link-redirection" >Refresh the page →</Link>
+                            <Link to="/signin" className="error-link-redirection">Refresh the page →</Link>
                         </section>
                     </section>
                 </section>

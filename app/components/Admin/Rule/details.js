@@ -1,12 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, IndexLink } from 'react-router';
+import Link from 'react-router';
 import LoginStore from '../../../stores/LoginStore.js';
 import PlatformException from '../../../models/PlatformException.js';
-import MemberInfoService from '../../../services/MemberService.js';
-import SessionService from '../../../services/SessionService.js';
 import RuleService from '../../../services/RuleService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../Utility/redirection.js';
+import {redirectionError, redirectionUnauthorised} from '../../Utility/redirection.js';
 import {notificationAlert, notificationSuccess} from '../../Utility/notification.js';
 
 var RuleDetail = React.createClass({

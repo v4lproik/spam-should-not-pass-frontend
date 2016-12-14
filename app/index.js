@@ -17,7 +17,6 @@ import ContextDetails from './components/Admin/Context/details.js';
 import ContextAdd from './components/Admin/Context/add.js';
 import Scheme from './components/Admin/Scheme/scheme.js';
 import Dashboard from './components/Admin/Dashboard/dashboard.js';
-import Navbar from './components/Vitrine/Navbar/container.js';
 import SignIn from './components/Vitrine/SignIn/container.js';
 import SignUp from './components/Vitrine/SignUp/container.js';
 import SignUpConfirmation from './components/Vitrine/SignUp/confirmation.js';
@@ -31,91 +30,97 @@ import SessionService from './services/SessionService.js';
 import MemberInfoService from './services/MemberService.js';
 import AuthService from './services/AuthService.js';
 import LoginStore from './stores/LoginStore.js';
-import { Router, Route, Link, IndexRoute } from 'react-router';
+import {Router, Route, IndexRoute} from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
+import PlatformException from './models/PlatformException';
+import redirectionError from './components/Utility/redirection.js';
 
 function requireAuth(nextState, replaceState) {
-    var user = LoginStore.getUser();
+    let user = LoginStore.getUser();
 
     if (user === null) {
-        replaceState({ nextPathname: nextState.location.pathname }, '/error401');
+        replaceState({
+            nextPathname: nextState.location.pathname
+        }, '/error401');
         return;
-    }else{
-        if (!SessionService.isValid(user.lastUpdate)){
+    } else {
+        if (!SessionService.isValid(user.lastUpdate)) {
             LoginStore.clearUser();
-            replaceState({ nextPathname: nextState.location.pathname }, '/session-expired');
+            replaceState({
+                nextPathname: nextState.location.pathname
+            }, '/session-expired');
             return;
         }
 
-        MemberInfoService.info(user.token)
-            .then(function(data){
-                LoginStore.setUser(data);
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.code);
-                }
-            }.bind(this));
+        MemberInfoService.info(user.token).then(function(data) {
+            LoginStore.setUser(data);
+        }.bind(this)).catch(function(err) {
+            if (err instanceof PlatformException.constructor) {
+                redirectionError(this.props.history, err.code);
+            }
+        }.bind(this));
     }
 }
 
 function killSession(nextState, replaceState) {
-    var user = LoginStore.getUser();
+    let user = LoginStore.getUser();
 
     if (user !== null) {
         AuthService.logout(user.token);
         LoginStore.clearUser();
-    }else{
-        replaceState({ nextPathname: nextState.location.pathname }, '/');
+    } else {
+        replaceState({
+            nextPathname: nextState.location.pathname
+        }, '/');
     }
 }
 
 function requireNotAuth(nextState, replaceState) {
-    var user = LoginStore.getUser();
+    let user = LoginStore.getUser();
 
     if (user !== null) {
-        if (SessionService.isValid(user.lastUpdate)){
-            replaceState({ nextPathname: nextState.location.pathname }, '/');
+        if (SessionService.isValid(user.lastUpdate)) {
+            replaceState({
+                nextPathname: nextState.location.pathname
+            }, '/');
         }
     }
 }
 
 ReactDOM.render(
     <Router history={createBrowserHistory()}>
-        <Route path="/admin" component={Admin}>
-            <IndexRoute component={Dashboard} onEnter={requireAuth}/>
-            <Route path="dashboard" component={Dashboard} onEnter={requireAuth}/>
-            <Route path="scheme" component={Scheme} onEnter={requireAuth}/>
-            <Route path="api" component={ApiIndex} onEnter={requireAuth}/>
-            <Route path="documentation" component={DocIndex} onEnter={requireAuth}/>
-            <Route path="faq" component={FaqIndex} onEnter={requireAuth}/>
-            <Route path="profile" component={ProfileIndex} onEnter={requireAuth}/>
-            <Route path="settings" component={SettingsIndex} onEnter={requireAuth}/>
-            <Route path="rule" component={RuleIndex}>
-                <IndexRoute component={RuleList} onEnter={requireAuth}/>
-                <Route path="list" component={RuleList} onEnter={requireAuth}/>
-                <Route path="detail/:ruleID" component={RuleDetails} onEnter={requireAuth}/>
-                <Route path="add" component={RuleAdd} onEnter={requireAuth}/>
-            </Route>
-            <Route path="context" component={ContextIndex}>
-                <IndexRoute component={ContextList} onEnter={requireAuth}/>
-                <Route path="list" component={ContextList} onEnter={requireAuth}/>
-                <Route path="detail/:contextId" component={ContextDetails} onEnter={requireAuth}/>
-                <Route path="add" component={ContextAdd} onEnter={requireAuth}/>
-            </Route>
+    <Route path="/admin" component={Admin}>
+        <IndexRoute component={Dashboard} onEnter={requireAuth}/>
+        <Route path="dashboard" component={Dashboard} onEnter={requireAuth}/>
+        <Route path="scheme" component={Scheme} onEnter={requireAuth}/>
+        <Route path="api" component={ApiIndex} onEnter={requireAuth}/>
+        <Route path="documentation" component={DocIndex} onEnter={requireAuth}/>
+        <Route path="faq" component={FaqIndex} onEnter={requireAuth}/>
+        <Route path="profile" component={ProfileIndex} onEnter={requireAuth}/>
+        <Route path="settings" component={SettingsIndex} onEnter={requireAuth}/>
+        <Route path="rule" component={RuleIndex}>
+            <IndexRoute component={RuleList} onEnter={requireAuth}/>
+            <Route path="list" component={RuleList} onEnter={requireAuth}/>
+            <Route path="detail/:ruleID" component={RuleDetails} onEnter={requireAuth}/>
+            <Route path="add" component={RuleAdd} onEnter={requireAuth}/>
         </Route>
-        <Route path="/logout" component={SignOut} onEnter={killSession}/>
+        <Route path="context" component={ContextIndex}>
+            <IndexRoute component={ContextList} onEnter={requireAuth}/>
+            <Route path="list" component={ContextList} onEnter={requireAuth}/>
+            <Route path="detail/:contextId" component={ContextDetails} onEnter={requireAuth}/>
+            <Route path="add" component={ContextAdd} onEnter={requireAuth}/>
+        </Route>
+    </Route>
+    <Route path="/logout" component={SignOut} onEnter={killSession}/>
 
-        <Route path="/error403" component={Error403} />
-        <Route path="/error404" component={Error404} />
-        <Route path="/session-expired" component={SessionExpired} />
-        <Route path="/error401" component={Error401} />
-        <Route path="/unavailable" component={Unavailable} />
+    <Route path="/error403" component={Error403}/>
+    <Route path="/error404" component={Error404}/>
+    <Route path="/session-expired" component={SessionExpired}/>
+    <Route path="/error401" component={Error401}/>
+    <Route path="/unavailable" component={Unavailable}/>
 
-        <Route path="/" component={App}/>
-        <Route path="/signin" component={SignIn} onEnter={requireNotAuth}/>
-        <Route path="/signup" component={SignUp} onEnter={requireNotAuth}/>
-        <Route path="/signup/confirmation" component={SignUpConfirmation} onEnter={requireNotAuth}/>
-    </Router>
-    , document.body
-);
+    <Route path="/" component={App}/>
+    <Route path="/signin" component={SignIn} onEnter={requireNotAuth}/>
+    <Route path="/signup" component={SignUp} onEnter={requireNotAuth}/>
+    <Route path="/signup/confirmation" component={SignUpConfirmation} onEnter={requireNotAuth}/>
+</Router>, document.body);

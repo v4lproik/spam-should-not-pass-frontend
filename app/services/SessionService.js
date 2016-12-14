@@ -1,8 +1,8 @@
 class SessionService {
 
-    constructor(){
+    constructor() {
         this.sessionTimeValidityInMinute = 60;
-        this.sessionTimeValidity = this.sessionTimeValidityInMinute*60*1000;
+        this.sessionTimeValidity = this.sessionTimeValidityInMinute * 60 * 1000;
     }
 
     isValid(lastUpdate) {
@@ -10,9 +10,9 @@ class SessionService {
         var lastAccess = new Date(lastUpdate);
         lastAccess.setTime(lastAccess.getTime() + this.sessionTimeValidity);
 
-        if(rightNow > lastAccess){
+        if (rightNow > lastAccess) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }

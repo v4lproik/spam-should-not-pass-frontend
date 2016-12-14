@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, IndexLink } from 'react-router';
+import { Link } from 'react-router';
 
 var session = React.createClass({
     render: function() {

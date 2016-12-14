@@ -1,4 +1,4 @@
-var Notification = require('bootstrap-notify');
+// var Notification = require('bootstrap-notify');
 
 function notificationSuccess(title, message){
     $.notify({

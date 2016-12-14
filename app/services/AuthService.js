@@ -1,6 +1,4 @@
-import LoginStore from '../stores/LoginStore';
 import Client from '../client/Platform';
-import PlatformException from '../models/PlatformException.js';
 
 class AuthService {
 
