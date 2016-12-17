@@ -41,7 +41,7 @@ function redirectionUnauthorised(history) {
     //window.location = 'http://localhost:3000/error401';
 }
 
-function redirectionAdmin(history) {
+function redirectionAdmin(/*history*/) {
     window.location = 'http://localhost:3000/admin';
 }
 

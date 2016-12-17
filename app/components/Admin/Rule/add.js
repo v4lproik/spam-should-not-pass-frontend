@@ -1,12 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, IndexLink } from 'react-router';
+import Link from 'react-router';
 import LoginStore from '../../../stores/LoginStore.js';
 import PlatformException from '../../../models/PlatformException.js';
-import MemberInfoService from '../../../services/MemberService.js';
-import SessionService from '../../../services/SessionService.js';
 import RuleService from '../../../services/RuleService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../Utility/redirection.js';
+import {redirectionError, redirectionUnauthorised} from '../../Utility/redirection.js';
 import {notificationAlert, notificationSuccess} from '../../Utility/notification.js';
 
 var RuleDetail = React.createClass({
@@ -15,7 +12,15 @@ var RuleDetail = React.createClass({
         return {
             username: '',
             context: {},
-            type: [{show: 'Document', value: 'DOCUMENT'}, {show: 'User', value: 'USER'}],
+            type: [
+                {
+                    show: 'Document',
+                    value: 'DOCUMENT'
+                }, {
+                    show: 'User',
+                    value: 'USER'
+                }
+            ],
             success: ''
         };
     },
@@ -42,16 +47,14 @@ var RuleDetail = React.createClass({
         newArray.rule = rule;
         newArray.name = name;
 
-        RuleService.add(newArray, user.token)
-            .then(function(){
-                notificationSuccess('Success', 'The rule has been added !');
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.code);
-                    notificationAlert('Error', err);
-                }
-            }.bind(this));
+        RuleService.add(newArray, user.token).then(function() {
+            notificationSuccess('Success', 'The rule has been added !');
+        }.bind(this)).catch(function(err) {
+            if (err instanceof PlatformException.constructor) {
+                redirectionError(this.props.history, err.code);
+                notificationAlert('Error', err);
+            }
+        }.bind(this));
     },
 
     render: function() {
@@ -71,8 +74,10 @@ var RuleDetail = React.createClass({
                                 <div className="form-group">
                                     <label>Type</label>
                                     <select className="form-control" ref="type">
-                                        {this.state.type.map(function(value){
-                                            return (<option value={value.value}>{value.show}</option>);
+                                        {this.state.type.map(function(value) {
+                                            return (
+                                                <option value={value.value}>{value.show}</option>
+                                            );
                                         }.bind(this))}
                                     </select>
                                 </div>

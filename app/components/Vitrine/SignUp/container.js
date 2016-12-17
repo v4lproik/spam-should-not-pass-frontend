@@ -1,13 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Navbar from '../Navbar/container.js';
-import {redirectionError, redirectionAdmin} from '../../Utility/redirection.js';
-import AuthService from '../../../services/AuthService.js';
+import {redirectionError} from '../../Utility/redirection.js';
 import MemberInfoService from '../../../services/MemberService.js';
-import LoginStore from '../../../stores/LoginStore.js';
 import PlatformException from '../../../models/PlatformException.js';
-import { Link, IndexLink } from 'react-router';
-import Validator from 'bootstrap-validator';
+import {Link} from 'react-router';
 
 //css
 require('../../../public/css/login.css');
@@ -15,14 +10,13 @@ require('../../../public/css/login.css');
 //img
 require('../../../public/img/key-login.jpg');
 
-
 var SignUp = React.createClass({
 
     handleSubmit: function(e) {
 
         e.preventDefault();
 
-        if(this.refs.signup.getAttribute('class').includes('disabled')){
+        if (this.refs.signup.getAttribute('class').includes('disabled')) {
             return;
         }
 
@@ -37,20 +31,20 @@ var SignUp = React.createClass({
             return;
         }
 
-        MemberInfoService.create(firstname, lastname, email, corporation, password)
-            .then(function(data){
-                this.props.history.pushState({registered: true}, '/signup/confirmation');
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    console.error(err);
-                    if(err.status == 500 && err.message === 'Email is already taken'){
-                        alert(err);
-                    }
-                    redirectionError(this.props.history, err.status);
-
+        MemberInfoService.create(firstname, lastname, email, corporation, password).then(function(/*data*/) {
+            this.props.history.pushState({
+                registered: true
+            }, '/signup/confirmation');
+        }.bind(this)).catch(function(err) {
+            if (err instanceof PlatformException.constructor) {
+                console.error(err);
+                if (err.status == 500 && err.message === 'Email is already taken') {
+                    alert(err);
                 }
-            }.bind(this));
+                redirectionError(this.props.history, err.status);
+
+            }
+        }.bind(this));
 
     },
 
@@ -62,14 +56,14 @@ var SignUp = React.createClass({
                         <div className="col-sm-2 col-md-8 col-md-offset-2">
                             <div className="panel panel-default">
                                 <div className="panel-heading">
-                                    <strong> Sign up to continue</strong>
+                                    <strong>
+                                        Sign up to continue</strong>
                                 </div>
                                 <div className="panel-body">
                                     <form role="form" data-toggle="validator" noValidate="true" onSubmit={this.handleSubmit}>
                                         <fieldset>
                                             <div className="row">
-                                                <div className="center-block">
-                                                </div>
+                                                <div className="center-block"></div>
                                             </div>
                                             <div className="row">
                                                 <div className="col-sm-12 col-md-10  col-md-offset-1 ">
@@ -87,7 +81,8 @@ var SignUp = React.createClass({
                                                             <span className="input-group-addon">
                                                                 <i className="glyphicon glyphicon-envelope"></i>
                                                             </span>
-                                                            <input type="email" className="form-control" id="inputEmail" placeholder="Email" data-error="Please enter a valid email" ref="email" required/>                                                        </div>
+                                                            <input type="email" className="form-control" id="inputEmail" placeholder="Email" data-error="Please enter a valid email" ref="email" required/>
+                                                        </div>
                                                     </div>
                                                     <div className="form-group">
                                                         <div className="input-group">
@@ -119,7 +114,7 @@ var SignUp = React.createClass({
                                                         </div>
                                                     </div>
                                                     <div className="form-group">
-                                                        <input type="submit" className="btn btn-lg btn-primary btn-block" value="Sign up" ref="signup" />
+                                                        <input type="submit" className="btn btn-lg btn-primary btn-block" value="Sign up" ref="signup"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -127,7 +122,9 @@ var SignUp = React.createClass({
                                     </form>
                                 </div>
                                 <div className="panel-footer ">
-                                    Already have an account! <Link to="/signin">Sign in Here </Link>
+                                    Already have an account!
+                                    <Link to="/signin">Sign in Here
+                                    </Link>
                                 </div>
                             </div>
                         </div>

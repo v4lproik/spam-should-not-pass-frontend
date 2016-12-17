@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, IndexLink } from 'react-router';
+import {Link} from 'react-router';
 
 var Error403 = React.createClass({
     render: function() {
@@ -11,7 +10,7 @@ var Error403 = React.createClass({
                         <section className="error-message-redirection">
                             <h1 className="error-code-redirection">403</h1>
                             <h2 className="error-description-redirection">Forbidden</h2>
-                            <Link to="/signin" className="error-link-redirection" >Go to the front page →</Link>
+                            <Link to="/signin" className="error-link-redirection">Go to the front page →</Link>
                         </section>
                     </section>
                 </section>

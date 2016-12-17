@@ -1,9 +1,8 @@
-import LoginStore from '../stores/LoginStore';
 import Client from '../client/Platform';
 
 class ContextService {
 
-    constructor(){
+    constructor() {
         this.base = '/context';
     }
 
@@ -11,7 +10,7 @@ class ContextService {
 
         var url = this.base + "/list";
 
-        return Client.postSync(url, {}, token).then(function(data){
+        return Client.postSync(url, {}, token).then(function(data) {
 
             if (typeof data !== undefined) {
 
@@ -19,7 +18,7 @@ class ContextService {
             }
 
             return null;
-        }).catch(function(err){
+        }).catch(function(err) {
             throw err;
         });
     }
@@ -27,18 +26,18 @@ class ContextService {
     add(name, token) {
 
         var url = this.base + "/create";
-        var data = {"name": name};
+        var data = {
+            "name": name
+        };
 
-        return Client.postSync(url, data, token)
-            .then(function(data){
-                if (typeof data.contexts[0] !== 'undefined') {
+        return Client.postSync(url, data, token).then(function(data) {
+            if (typeof data.contexts[0] !== 'undefined') {
 
-                    return data.contexts[0];
-                }
+                return data.contexts[0];
+            }
 
-                return null;
-            })
-            .catch(function(err){
+            return null;
+        }).catch(function(err) {
             throw err;
         });
     }
@@ -46,76 +45,83 @@ class ContextService {
     addRules(contextId, rules, token) {
 
         var url = this.base + "/add-rules";
-        var data = {idContext: contextId, listRules: rules};
+        var data = {
+            idContext: contextId,
+            listRules: rules
+        };
 
-        return Client.postSync(url, data, token)
-            .catch(function(err){
-                throw err;
-            });
+        return Client.postSync(url, data, token).catch(function(err) {
+            throw err;
+        });
     }
 
     getContextAndRules(contextId, token) {
 
         var url = this.base + "/get-and-rules";
-        var data = {id: contextId};
+        var data = {
+            id: contextId
+        };
 
-        return Client.postSync(url, data, token)
-            .then(function(data){
-                if (typeof data.contexts[0] !== 'undefined') {
+        return Client.postSync(url, data, token).then(function(data) {
+            if (typeof data.contexts[0] !== 'undefined') {
 
-                    return data.contexts[0];
-                }
+                return data.contexts[0];
+            }
 
-                return null;
-            })
-            .catch(function(err){
-                throw err;
-            });
+            return null;
+        }).catch(function(err) {
+            throw err;
+        });
     }
 
     update(context, token) {
 
         var url = this.base + "/update-and-rules";
-        var rulesId = context.rules.map(function(x){
+        var rulesId = context.rules.map(function(x) {
             return x.id;
         });
 
-        var data = {id: context.id, name: context.name, rulesId: rulesId};
+        var data = {
+            id: context.id,
+            name: context.name,
+            rulesId: rulesId
+        };
 
-        return Client.postSync(url, data, token)
-            .catch(function(err){
-                throw err;
-            });
+        return Client.postSync(url, data, token).catch(function(err) {
+            throw err;
+        });
     }
 
     get(contextId, token) {
 
         var url = this.base + "/get";
-        var data = {"id": contextId};
+        var data = {
+            "id": contextId
+        };
 
-        return Client.postSync(url, data, token)
-            .then(function(data){
+        return Client.postSync(url, data, token).then(function(data) {
 
-                if (typeof data.contexts[0] !== 'undefined') {
+            if (typeof data.contexts[0] !== 'undefined') {
 
-                    return data.contexts[0];
-                }
+                return data.contexts[0];
+            }
 
-                return null;
-            }).catch(function(err){
-                throw err;
-            });
+            return null;
+        }).catch(function(err) {
+            throw err;
+        });
     }
 
     delete(contextId, token) {
 
         var url = this.base + "/delete";
-        var data = {"id": contextId};
+        var data = {
+            "id": contextId
+        };
 
-        return Client.postSync(url, data, token)
-            .catch(function(err){
-                throw err;
-            });
+        return Client.postSync(url, data, token).catch(function(err) {
+            throw err;
+        });
     }
 }
 

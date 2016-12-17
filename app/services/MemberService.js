@@ -1,11 +1,10 @@
-import LoginStore from '../stores/LoginStore';
 import Client from '../client/Platform';
 
 class MemberInformationService {
 
-    constructor(){
+    constructor() {
         this.defaultPermission = "REGULAR";
-        this.defaultStatus     = "USER";
+        this.defaultStatus = "USER";
 
         this.base = '/user';
     }
@@ -14,7 +13,7 @@ class MemberInformationService {
 
         var url = this.base + "/info";
 
-        return Client.postSync(url, {}, token).then(function(data){
+        return Client.postSync(url, {}, token).then(function(data) {
 
             if (typeof data.user !== undefined) {
                 data.user.token = {};
@@ -24,7 +23,7 @@ class MemberInformationService {
             }
 
             return null;
-        }).catch(function(err){
+        }).catch(function(err) {
             throw err;
         });
     }
@@ -32,10 +31,17 @@ class MemberInformationService {
     create(firstname, lastname, email, corporation, password) {
 
         var url = this.base + "/create";
-        var data = {"firstname": firstname, "lastname": lastname, "email": email, "password": password, "corporation": corporation, "permission": this.defaultPermission, "status": this.defaultStatus};
+        var data = {
+            "firstname": firstname,
+            "lastname": lastname,
+            "email": email,
+            "password": password,
+            "corporation": corporation,
+            "permission": this.defaultPermission,
+            "status": this.defaultStatus
+        };
 
-        return Client.postSync(url, data, null)
-            .catch(function(err){
+        return Client.postSync(url, data, null).catch(function(err) {
             throw err;
         });
     }

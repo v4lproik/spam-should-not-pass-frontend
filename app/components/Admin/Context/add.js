@@ -1,23 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, IndexLink } from 'react-router';
+import {Link} from 'react-router';
 import LoginStore from '../../../stores/LoginStore.js';
 import PlatformException from '../../../models/PlatformException.js';
-import MemberInfoService from '../../../services/MemberService.js';
-import SessionService from '../../../services/SessionService.js';
 import RuleService from '../../../services/RuleService.js';
 import ContextService from '../../../services/ContextService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../Utility/redirection.js';
+import {redirectionError} from '../../Utility/redirection.js';
 import {notificationAlert, notificationSuccess} from '../../Utility/notification.js';
 
 var ContextAdd = React.createClass({
 
     getInitialState: function() {
-        return {
-            username: '',
-            rules: [],
-            rulesSelected: []
-        };
+        return {username: '', rules: [], rulesSelected: []};
     },
 
     componentWillMount: function() {
@@ -25,18 +18,13 @@ var ContextAdd = React.createClass({
 
         console.log("call from /context_add");
 
-        RuleService.list(user.token)
-            .then(function(data){
-                this.setState({
-                    username: user.nickName,
-                    rules: data
-                });
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.code);
-                }
-            }.bind(this));
+        RuleService.list(user.token).then(function(data) {
+            this.setState({username: user.nickName, rules: data});
+        }.bind(this)).catch(function(err) {
+            if (err instanceof PlatformException.constructor) {
+                redirectionError(this.props.history, err.code);
+            }
+        }.bind(this));
     },
 
     handleSubmitContext: function(e) {
@@ -46,13 +34,13 @@ var ContextAdd = React.createClass({
         var rulesSelected = this.state.rulesSelected;
         var rules = [];
 
-        if(this.state.rulesSelected.length == 0){
+        if (this.state.rulesSelected.length == 0) {
             notificationAlert('Error', 'You have to choose at least one rule');
             return;
         }
 
         for (var i = 0; i < rulesSelected.length; i++) {
-           rules.push({id: rulesSelected[i]});
+            rules.push({id: rulesSelected[i]});
         }
 
         if (!name) {
@@ -60,25 +48,22 @@ var ContextAdd = React.createClass({
         }
 
         var user = LoginStore.getUser();
-        ContextService.add(name, user.token)
-            .then(function(context){
-                ContextService.addRules(context.id, rules, user.token)
-                    .then(function(context){
-                        notificationSuccess('Success', 'The context has been added !');
-                    }.bind(this))
-                    .catch(function(err){
-                        if(err instanceof PlatformException.constructor){
-                            redirectionError(this.props.history, err.code);
-                            notificationAlert('Error', err.message);
-                        }
-                    }.bind(this));
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
+        ContextService.add(name, user.token).then(function(context) {
+            ContextService.addRules(context.id, rules, user.token).then(function(context) {
+                console.log(context);
+                notificationSuccess('Success', 'The context has been added !');
+            }.bind(this)).catch(function(err) {
+                if (err instanceof PlatformException.constructor) {
                     redirectionError(this.props.history, err.code);
                     notificationAlert('Error', err.message);
                 }
             }.bind(this));
+        }.bind(this)).catch(function(err) {
+            if (err instanceof PlatformException.constructor) {
+                redirectionError(this.props.history, err.code);
+                notificationAlert('Error', err.message);
+            }
+        }.bind(this));
     },
 
     handleClick: function(id) {
@@ -88,7 +73,9 @@ var ContextAdd = React.createClass({
     handleChange: function(idRule) {
         var index = this.state.rulesSelected.indexOf(idRule);
 
-        index > -1 ? this.state.rulesSelected.splice(index, 1) : this.state.rulesSelected.push(idRule);
+        index > -1
+            ? this.state.rulesSelected.splice(index, 1)
+            : this.state.rulesSelected.push(idRule);
     },
 
     render: function() {
@@ -121,19 +108,24 @@ var ContextAdd = React.createClass({
                             <div className="box-body">
                                 <table id="example2" className="table table-bordered table-hover">
                                     <thead>
-                                    <tr>
-                                        <th style={{width: '10px'}}>#</th>
-                                        <th>Name</th>
-                                    </tr>
+                                        <tr>
+                                            <th style={{
+                                                width: '10px'
+                                            }}>#</th>
+                                            <th>Name</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {rules.map(function(value){
-                                        if(value.type === 'SPAMMER'){
-                                            return(
-                                                <tr><td><input type="checkbox" className="minimal" onChange={this.handleChange.bind(this, value.id)}/></td><td>{value.rule}</td></tr>
-                                            )
-                                        }
-                                    }.bind(this))}
+                                        {rules.map(function(value) {
+                                            if (value.type === 'SPAMMER') {
+                                                return (
+                                                    <tr>
+                                                        <td><input type="checkbox" className="minimal" onChange={this.handleChange.bind(this, value.id)}/></td>
+                                                        <td>{value.rule}</td>
+                                                    </tr>
+                                                )
+                                            }
+                                        }.bind(this))}
                                     </tbody>
                                 </table>
                             </div>
@@ -147,19 +139,24 @@ var ContextAdd = React.createClass({
                             <div className="box-body">
                                 <table id="example2" className="table table-bordered table-hover">
                                     <thead>
-                                    <tr>
-                                        <th style={{width: '10px'}}>#</th>
-                                        <th>Name</th>
-                                    </tr>
+                                        <tr>
+                                            <th style={{
+                                                width: '10px'
+                                            }}>#</th>
+                                            <th>Name</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    {rules.map(function(value){
-                                        if(value.type === 'SPAM'){
-                                            return(
-                                                <tr><td><input type="checkbox" className="minimal" onChange={this.handleChange.bind(this, value.id)}/></td><td>{value.rule}</td></tr>
-                                            )
-                                        }
-                                    }.bind(this))}
+                                        {rules.map(function(value) {
+                                            if (value.type === 'SPAM') {
+                                                return (
+                                                    <tr>
+                                                        <td><input type="checkbox" className="minimal" onChange={this.handleChange.bind(this, value.id)}/></td>
+                                                        <td>{value.rule}</td>
+                                                    </tr>
+                                                )
+                                            }
+                                        }.bind(this))}
                                     </tbody>
                                 </table>
                             </div>

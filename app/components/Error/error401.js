@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, IndexLink } from 'react-router';
+import {Link} from 'react-router';
 
 var Error401 = React.createClass({
     render: function() {
@@ -11,7 +10,7 @@ var Error401 = React.createClass({
                         <section className="error-message-redirection">
                             <h1 className="error-code-redirection">401</h1>
                             <h2 className="error-description-redirection">UnAuthorised</h2>
-                            <Link to="/signin" className="error-link-redirection" >Go to the signin page →</Link>
+                            <Link to="/signin" className="error-link-redirection">Go to the signin page →</Link>
                         </section>
                     </section>
                 </section>

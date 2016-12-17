@@ -1,12 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Link, IndexLink } from 'react-router';
 import LoginStore from '../../../stores/LoginStore.js';
 import PlatformException from '../../../models/PlatformException.js';
-import MemberInfoService from '../../../services/MemberService.js';
 import SchemeService from '../../../services/SchemeService.js';
-import SessionService from '../../../services/SessionService.js';
-import {redirectionError, redirectionSessionExpired, redirectionUnauthorised} from '../../Utility/redirection.js';
+import {redirectionError, redirectionUnauthorised} from '../../Utility/redirection.js';
 import ArrayUtility from '../../Utility/array.js';
 
 var Scheme = React.createClass({
@@ -25,31 +21,27 @@ var Scheme = React.createClass({
     componentWillMount: function() {
         var user = LoginStore.getUser();
 
-        SchemeService.getUser(user.id, user.token)
-            .then(function(schemeSpammer){
-                this.setState({
-                    spammerScheme: schemeSpammer,
-                    spammerSchemeToDisplay: ArrayUtility.sortByKey(schemeSpammer.properties, 'position')
-                });
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.code);
-                }
-            }.bind(this));
+        SchemeService.getUser(user.id, user.token).then(function(schemeSpammer) {
+            this.setState({
+                spammerScheme: schemeSpammer,
+                spammerSchemeToDisplay: ArrayUtility.sortByKey(schemeSpammer.properties, 'position')
+            });
+        }.bind(this)).catch(function(err) {
+            if (err instanceof PlatformException.constructor) {
+                redirectionError(this.props.history, err.code);
+            }
+        }.bind(this));
 
-        SchemeService.getDocument(user.id, user.token)
-            .then(function(schemeSpam){
-                this.setState({
-                    spamScheme: schemeSpam,
-                    spamSchemeToDisplay: ArrayUtility.sortByKey(schemeSpam.properties, 'position')
-                });
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.code);
-                }
-            }.bind(this));
+        SchemeService.getDocument(user.id, user.token).then(function(schemeSpam) {
+            this.setState({
+                spamScheme: schemeSpam,
+                spamSchemeToDisplay: ArrayUtility.sortByKey(schemeSpam.properties, 'position')
+            });
+        }.bind(this)).catch(function(err) {
+            if (err instanceof PlatformException.constructor) {
+                redirectionError(this.props.history, err.code);
+            }
+        }.bind(this));
     },
 
     handleSubmitSpam: function(e) {
@@ -79,18 +71,14 @@ var Scheme = React.createClass({
             redirectionUnauthorised(this.props.history);
         }
 
-        SchemeService.addDocument(properties, user.token)
-            .then(function(){
-                this.setState({
-                    spamSchemeToDisplay: properties
-                });
+        SchemeService.addDocument(properties, user.token).then(function() {
+            this.setState({spamSchemeToDisplay: properties});
 
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.code);
-                }
-            }.bind(this));
+        }.bind(this)).catch(function(err) {
+            if (err instanceof PlatformException.constructor) {
+                redirectionError(this.props.history, err.code);
+            }
+        }.bind(this));
     },
 
     handleSubmitSpammer: function(e) {
@@ -120,18 +108,14 @@ var Scheme = React.createClass({
             redirectionUnauthorised(this.props.history);
         }
 
-        SchemeService.addUser(properties, user.token)
-            .then(function(){
-                this.setState({
-                    spammerSchemeToDisplay: properties
-                });
+        SchemeService.addUser(properties, user.token).then(function() {
+            this.setState({spammerSchemeToDisplay: properties});
 
-            }.bind(this))
-            .catch(function(err){
-                if(err instanceof PlatformException.constructor){
-                    redirectionError(this.props.history, err.code);
-                }
-            }.bind(this));
+        }.bind(this)).catch(function(err) {
+            if (err instanceof PlatformException.constructor) {
+                redirectionError(this.props.history, err.code);
+            }
+        }.bind(this));
     },
 
     render: function() {
@@ -159,33 +143,40 @@ var Scheme = React.createClass({
 
                                         <table className="table table-bordered table-hover">
                                             <thead>
-                                            <tr>
-                                                <th>Type</th>
-                                                <th>Name</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Name</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            {schemeSpammer.map(function(value){
-                                                return (<tr><td>{value.variableType.split(".").pop()}</td><td>{value.variableName}</td></tr>);
-                                            })}
-                                            <tr>
+                                                {schemeSpammer.map(function(value) {
+                                                    return (
+                                                        <tr>
+                                                            <td>{value.variableType.split(".").pop()}</td>
+                                                            <td>{value.variableName}</td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                                <tr>
 
-                                                <td className="form-group">
-                                                    <div className="form-group">
-                                                        <select className="form-control" ref="variableType">
-                                                            {this.state.variableType.map(function(value){
-                                                                return (<option>{value}</option>);
-                                                            })}
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <input className="form-control" type="text" placeholder="Default input" ref="variableNameSpammer" />
-                                                </td>
-                                                <td>
-                                                    <input type="submit" className="btn btn-sm btn-primary btn-block" value="+" />
-                                                </td>
-                                            </tr>
+                                                    <td className="form-group">
+                                                        <div className="form-group">
+                                                            <select className="form-control" ref="variableType">
+                                                                {this.state.variableType.map(function(value) {
+                                                                    return (
+                                                                        <option>{value}</option>
+                                                                    );
+                                                                })}
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <input className="form-control" type="text" placeholder="Default input" ref="variableNameSpammer"/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="submit" className="btn btn-sm btn-primary btn-block" value="+"/>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </form>
@@ -202,33 +193,40 @@ var Scheme = React.createClass({
 
                                         <table id="example2" className="table table-bordered table-hover">
                                             <thead>
-                                            <tr>
-                                                <th>Type</th>
-                                                <th>Name</th>
-                                            </tr>
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>Name</th>
+                                                </tr>
                                             </thead>
                                             <tbody>
-                                            {schemeSpam.map(function(value){
-                                                return (<tr><td>{value.variableType.split(".").pop()}</td><td>{value.variableName}</td></tr>);
-                                            })}
-                                            <tr>
-                                                <td>
-                                                    <div className="form-group">
-                                                        <select className="form-control" ref="variableType">
-                                                            {this.state.variableType.map(function(value){
-                                                                return (<option>{value}</option>);
-                                                            })}
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <input className="form-control" type="text" placeholder="Default input" ref="variableNameSpam" />
-                                                    <input className="form-control" type="hidden" ref="variableScheme" value="spam"/>
-                                                </td>
-                                                <td>
-                                                    <input type="submit" className="btn btn-sm btn-primary btn-block" value="+" />
-                                                </td>
-                                            </tr>
+                                                {schemeSpam.map(function(value) {
+                                                    return (
+                                                        <tr>
+                                                            <td>{value.variableType.split(".").pop()}</td>
+                                                            <td>{value.variableName}</td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                                <tr>
+                                                    <td>
+                                                        <div className="form-group">
+                                                            <select className="form-control" ref="variableType">
+                                                                {this.state.variableType.map(function(value) {
+                                                                    return (
+                                                                        <option>{value}</option>
+                                                                    );
+                                                                })}
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <input className="form-control" type="text" placeholder="Default input" ref="variableNameSpam"/>
+                                                        <input className="form-control" type="hidden" ref="variableScheme" value="spam"/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="submit" className="btn btn-sm btn-primary btn-block" value="+"/>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </form>
