@@ -5,6 +5,11 @@
 
 It provides a simple (client side rendering) frontend that renders a nice and clean website and a user administration
 
+## Style guides
+
+https://github.com/airbnb/javascript/tree/master/react
+https://github.com/kriasoft/react-starter-kit/blob/master/docs/react-style-guide.md
+
 ## Techno
 
 - ReactJS 0.14.3
