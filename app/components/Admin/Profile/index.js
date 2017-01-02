@@ -1,8 +1,29 @@
 import React from 'react';
+import LoginStore from '../../../stores/LoginStore';
+import ProfileService from '../../../services/ProfileService';
 
-var ProfileIndex = React.createClass({
+class ProfileIndex extends React.Component {
 
-    render: function() {
+    constructor(props) {
+        super(props);
+        this.user = {};
+    }
+
+    componentWillMount() {
+        let user = LoginStore.getUser();
+
+        ProfileService.get(this.props.params.userId, user.token).then(function(data) {
+            console.log('componentWillMount user : ');
+            console.log(user);
+            this.user = data.user;
+            // this.setState({user: data.user});
+        }.bind(this)).catch(function(err) {
+            console.log(err);
+        }.bind(this));
+    }
+
+    render() {
+
         return (
             <div>
                 <section className="content-header">
@@ -12,11 +33,12 @@ var ProfileIndex = React.createClass({
                 </section>
 
                 <section className="content">
-                    {this.props.children}
+                    Test
+                    {this.user.email}
                 </section>
             </div>
-        )
+        );
     }
-});
+}
 
-module.exports = ProfileIndex;
+export default ProfileIndex;
