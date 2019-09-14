@@ -1,6 +1,7 @@
 # Spam Should Not Pass FrontEnd
 [![Circle CI](https://circleci.com/gh/v4lproik/spam-should-not-pass.svg?style=svg)](https://circleci.com/gh/v4lproik/spam-should-not-pass-frontend)
 
+
 ## Features implemented
 
 It provides a simple (client side rendering) frontend that renders a nice and clean website and a user administration
